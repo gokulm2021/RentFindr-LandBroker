@@ -1,0 +1,803 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    background: url('/static/assets/img/5630939.jpg') no-repeat center center fixed;
+    background-size: cover; /* Ensures the background covers the entire area */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Full viewport height */
+    margin: 0;
+}
+
+.dashboard-box {
+    max-width: 600px;
+    background-color: rgba(15, 15, 35, 0.8); /* Semi-transparent background */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    backdrop-filter: blur(10px);
+    width: 90%;
+    margin: 0 1rem;
+}
+
+.dashboard-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+
+.profile-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the contents horizontally */
+    justify-content: center; /* Center the contents vertically */
+    margin-bottom: 20px; /* Space below the container */
+    padding: 20px; /* Add padding around the container */
+}
+
+.profile-image-container img {
+    width: 150px; /* Adjust image size as needed */
+    height: 150px; /* Maintain aspect ratio */
+    border-radius: 50%; /* Circular image */
+    object-fit: cover; /* Ensures the image covers the area */
+    border: 4px solid #3498db; /* Border color */
+    margin-bottom: 10px; /* Space below the image */
+}
+
+
+
+.dashboard-content {
+    flex: 2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Section Styling */
+.welcome {
+    background-color: rgba(112, 193, 255, 0.1); /* Light blue transparent background */
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.welcome h1 {
+    color: #f5f5f5;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.welcome p {
+    color: #c0c4d6;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Profile Section Styles */
+.profile {
+    background-color: rgba(50, 50, 70, 0.5); /* Darker semi-transparent background */
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.profile h2 {
+    color: #70c1ff;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.profile p {
+    color: #c0c4d6;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
+
+/* Section Headers Alignment */
+.section h2, .section h1 {
+    text-align: center;
+}
+
+
+/* Profile and Settings */
+
+
+
+.profile p, .settings button {
+    margin: 8px 0;
+}
+
+.settings button {
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.settings button:hover {
+    background-color: #2980b9;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    padding: 20px; /* Adds padding around the viewport */
+}
+
+.dashboard-box {
+    display: flex;
+    width: 90%;
+    max-width: 900px;
+    padding: 20px;
+    background-color: rgba(15, 15, 35, 0.8); /* Semi-transparent background */
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px 0; /* Adds top and bottom margin */
+}
+
+
+.back-button {
+    background-color: transparent;
+    border: none;
+    color: #70c1ff;
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.back-button:hover {
+    color: #0073e6;
+}
+
+.back-icon {
+    margin-right: 5px;
+}
+
+/* General Styles for the Settings Section */
+
+.settings {
+    background-color: rgba(60, 60, 80, 0.5); /* Darker semi-transparent background for settings */
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 1rem;
+}
+.settings h2 {
+    color: #70c1ff;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.settings-form {
+    margin-bottom: 1.5rem;
+}
+
+.settings-form h3 {
+    color: #c0c4d6;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.section.settings form {
+    margin-bottom: 20px; /* Space below each form */
+    margin-top: 1rem;
+}
+
+.settings-form input[type="email"],
+.settings-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    border: 1px solid #3a3d4a;
+    background-color: #1b1e2f;
+    color: #f5f5f5;
+    font-size: 1rem;
+}
+
+
+.settings-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #70c1ff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.settings-form button:hover {
+    background-color: #0073e6;
+    transform: scale(1.05);
+}
+
+.settings-form input:focus {
+    border-color: #70c1ff;
+    box-shadow: 0 0 5px rgba(112, 193, 255, 0.5);
+}
+
+.settings-form button,
+    .dashboard-btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #1392f3; /* Matching light blue color */
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: background-color 0.3s, transform 0.3s;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .settings-form button:hover,
+    .dashboard-btn:hover {
+        background-color: #0073e6; /* Darker blue on hover */
+        transform: scale(1.05);
+    }
+
+.section.settings button a {
+    color: white; /* Link color in buttons */
+    text-decoration: none; /* No underline */
+}
+
+
+    /* Style for Danger Button (Delete Account) */
+    #delete-account-button {
+        width: 100%;
+        padding: 10px;
+        background-color: #dd1d1d; /* Dark red for delete action */
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+        margin-top: 1rem;
+    }
+
+    #delete-account-button:hover {
+        background-color: #a33434; /* Slightly lighter red on hover */
+        transform: scale(1.05);
+    }
+
+    
+/* Logout Button Style */
+.logout-button {
+    width: 100%;
+    padding: 10px;
+    background-color:  #0e91f4; /* Consistent blue color */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-top: 1rem;
+}
+
+/* Hover effect for Logout Button */
+.logout-button:hover {
+    background-color: #0073e6; /* Darker blue on hover */
+    transform: scale(1.05);
+}
+
+/* Remove default link styling if <a> is used inside the button */
+.logout-button a {
+    color: white;
+    text-decoration: none;
+    display: block; /* Ensures link takes full button space */
+    width: 100%;
+    height: 100%;
+}
+
+
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    
+}
+
+.modal-content {
+    background-color: rgba(15, 15, 35, 0.9);
+    margin: 15% auto;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    color: #f5f5f5;
+}
+
+.close-button {
+    color: #70c1ff;
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #0073e6;
+}
+
+#confirm-delete-button,
+#cancel-delete-button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#confirm-delete-button {
+    background-color: #d9534f; /* Red */
+    color: white;
+}
+
+#cancel-delete-button {
+    background-color: #5bc0de; /* Light blue */
+    color: white;
+}
+
+
+
+.message-container {
+    display: none; /* Initially hidden */
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: relative; /* For positioning icons */
+}
+
+.message-success {
+    background-color: #d4edda; /* Light green background */
+    color: #155724; /* Dark green text */
+    border: 1px solid #c3e6cb; /* Green border */
+}
+
+.message-error {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+    border: 1px solid #f5c6cb; /* Red border */
+}
+
+/* Optional: Styles for icons */
+.message-container span {
+    font-size: 20px; /* Adjust the icon size */
+    vertical-align: middle; /* Center icon vertically */
+}
+
+/* Additional styles for a smoother look */
+.dashboard-box {
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background for the dashboard */
+    border-radius: 8px; /* Rounded corners for the dashboard */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    background-color: rgba(15, 15, 35, 0.8); /* Semi-transparent background */
+}
+
+
+ /* Responsive Media Queries */
+ @media (max-width: 768px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-box {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    .dashboard-box {
+        padding: 1.2rem;
+        max-width: 95%;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+}
+
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .dashboard-box {
+        padding: 10px;
+    }
+
+    #profileImage {
+        width: 100px; /* Smaller image for mobile */
+        height: 100px; /* Maintain aspect ratio */
+    }
+
+    .back-button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .settings-form input {
+        font-size: 14px;
+    }
+
+    .settings-form button {
+        padding: 8px;
+    }
+
+    .modal-content {
+        width: 90%; /* Wider modal on mobile */
+    }
+}
+
+/* Add this to your existing CSS */
+@media (max-width: 768px) {
+    .dashboard-content {
+        flex-direction: column; /* Stack items vertically */
+    }
+
+    .profile-image-container {
+        margin-bottom: 20px; /* Add space between profile image and settings */
+        width: 100%; /* Ensure it takes full width */
+    }
+
+    .settings {
+        width: 100%; /* Ensure settings take full width */
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-content {
+        gap: 15px; /* Adjust gap between stacked items */
+    }
+
+    .profile-image-container img {
+        width: 80px; /* Smaller image for mobile */
+        height: 80px; /* Maintain aspect ratio */
+    }
+
+    .welcome h1 {
+        font-size: 1.4rem; /* Adjust title size for mobile */
+    }
+
+    .welcome p {
+        font-size: 0.9rem; /* Adjust paragraph size for mobile */
+    }
+
+    .settings-form input[type="email"],
+    .settings-form input[type="password"] {
+        font-size: 14px; /* Smaller font size for inputs */
+    }
+
+    .settings-form button,
+    .dashboard-btn {
+        padding: 8px; /* Adjust button padding for mobile */
+    }
+
+    .modal-content {
+        width: 90%; /* Ensure modal is responsive */
+    }
+}
+
+.section.welcome {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Vertically center content */
+    justify-content: space-between; /* Space between text and image */
+    padding: 20px; /* Add padding to the section */
+}
+
+.welcome-content {
+    display: flex; /* Flex container for welcome content */
+    width: 100%; /* Full width to use space efficiently */
+}
+
+.welcome-text {
+    flex: 1; /* Allow this div to take available space */
+    max-width: 60%; /* Limit width of the welcome text */
+}
+
+.section.welcome {
+    flex-direction: row;
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Vertically center content */
+    justify-content: space-between; /* Space between text and image */
+    padding: 20px; /* Add padding to the section */
+}
+
+.welcome-content {
+    display: flex; /* Flex container for welcome content */
+    width: 100%; /* Full width to use space efficiently */
+}
+
+.welcome-text {
+    flex: 1; /* Allow this div to take available space */
+    max-width: 60%; /* Limit width of the welcome text */
+}
+
+.profile-image-container {
+    display: flex;
+    flex-direction: column; /* Stack image and button vertically */
+    align-items: center; /* Center the contents */
+    justify-content: center; /* Center the contents */
+    margin-left: 20px; /* Space between text and image */
+}
+
+.profile-image-container img {
+    width: 150px; /* Adjust image size as needed */
+    height: 150px; /* Maintain aspect ratio */
+    border-radius: 100%; /* Circular image */
+    object-fit: cover; /* Ensures the image covers the area */
+    border: 4px solid #3498db; /* Border color */
+    margin-bottom: 10px; /* Space below the image */
+}
+
+.back-button {
+    margin-top: 10px; /* Space above the button */
+    padding: 10px 15px; /* Button padding */
+    background-color: #3498db; /* Button background color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s; /* Transition effect */
+}
+
+.back-button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .section.welcome {
+        flex-direction: column; /* Stack items vertically on small screens */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .welcome-content {
+        flex-direction: column; /* Stack welcome content vertically */
+        width: 100%; /* Full width */
+    }
+
+    .welcome-text {
+        max-width: 100%; /* Allow full width on small screens */
+        margin-bottom: 20px; /* Space below text for separation */
+    }
+
+    .profile-image-container {
+        margin-left: 0; /* Remove left margin */
+        align-items: center; /* Center contents */
+        margin-top: 20px; /* Space above the profile image container */
+    }
+
+    .profile-image-container img {
+        width: 80px; /* Smaller image size on mobile */
+        height: 80px; /* Maintain aspect ratio */
+    }
+
+    .back-button {
+        padding: 8px 12px; /* Adjust button padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-text h1 {
+        font-size: 1.5em; /* Smaller font size for the heading */
+    }
+
+    .welcome-text p {
+        font-size: 0.9em; /* Smaller font size for the paragraph */
+    }
+
+    .profile-image-container img {
+        width: 70px; /* Further smaller image size */
+        height: 70px; /* Maintain aspect ratio */
+    }
+}
+
+
+.section.welcome {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Align items to center vertically */
+    justify-content: space-between; /* Space between text and image */
+    padding: 20px; /* Add padding to the section */
+    text-align: center; /* Center text alignment */
+}
+
+.welcome-content {
+    display: flex; /* Flex container for welcome content */
+    width: 100%; /* Full width to use space efficiently */
+    flex-direction: column; /* Stack items vertically */
+}
+
+.welcome-text {
+    flex: 1; /* Allow this div to take available space */
+    max-width: 60%; /* Limit width of the welcome text */
+    margin: 0 auto; /* Center the text block */
+}
+
+.welcome-text h1 {
+    margin-bottom: 10px; /* Space below the heading to separate from paragraph */
+}
+
+.profile-image-container {
+    display: flex;
+    flex-direction: column; /* Stack image and button vertically */
+    align-items: center; /* Center the contents */
+    justify-content: center; /* Center the contents */
+    margin-left: 20px; /* Space between text and image */
+}
+
+.profile-image-container img {
+    width: 150px; /* Adjust image size as needed */
+    height: 150px; /* Maintain aspect ratio */
+    border-radius: 50%; /* Circular image */
+    object-fit: cover; /* Ensures the image covers the area */
+    border: 4px solid #3498db; /* Border color */
+    margin-bottom: 10px; /* Space below the image */
+}
+
+.back-button {
+    margin-top: 10px; /* Space above the button */
+    padding: 10px 15px; /* Button padding */
+    background-color: #3498db; /* Button background color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s; /* Transition effect */
+}
+
+.back-button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .section.welcome {
+        flex-direction: column; /* Stack items vertically on small screens */
+        align-items: center; /* Center items on small screens */
+    }
+
+    .welcome-content {
+        flex-direction: column; /* Stack welcome content vertically */
+        width: 100%; /* Full width */
+    }
+
+    .welcome-text {
+        max-width: 100%; /* Allow full width on small screens */
+        margin-bottom: 20px; /* Space below text for separation */
+    }
+
+    .profile-image-container {
+        margin-left: 0; /* Remove left margin */
+        align-items: center; /* Center contents */
+        margin-top: 20px; /* Space above the profile image container */
+    }
+
+    .profile-image-container img {
+        width: 80px; /* Smaller image size on mobile */
+        height: 80px; /* Maintain aspect ratio */
+    }
+
+    .back-button {
+        padding: 8px 12px; /* Adjust button padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-text h1 {
+        font-size: 1.5em; /* Smaller font size for the heading */
+    }
+
+    .welcome-text p {
+        font-size: 0.9em; /* Smaller font size for the paragraph */
+    }
+
+    .profile-image-container img {
+        width: 70px; /* Further smaller image size */
+        height: 70px; /* Maintain aspect ratio */
+    }
+}
+.settings-form label { /* Styles for labels within settings forms */
+    display: block; /* Makes the label a block element */
+    margin-bottom: 0.5rem; /* Space below the label */
+    color: #f5f5f5; /* Text color */
+    font-size: 1rem; /* Font size */
+    font-weight: 500; /* Font weight */
+}
+
+
+.settings-form input[type="text"] { /* Styles specifically for the text input (username) */
+    width: 100%; /* Full width */
+    padding: 10px; /* Inner padding */
+    margin-bottom: 1rem; /* Space below the input */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #3a3d4a; /* Border color */
+    background-color: #1b1e2f; /* Background color */
+    color: #f5f5f5; /* Text color */
+    font-size: 1rem; /* Font size */
+}
+
+.settings-form button { /* Styles for buttons */
+    width: 100%; /* Full width */
+    padding: 10px; /* Inner padding */
+    background-color: #70c1ff; /* Button background color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    color: white; /* Text color */
+    font-size: 1.1rem; /* Font size */
+    font-weight: 500; /* Font weight */
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s, transform 0.3s; /* Transition for hover effect */
+}
+
+.settings-form button:hover { /* Button hover effect */
+    background-color: #0073e6; /* Darker background on hover */
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+.settings-form input:focus { /* Focus styles for input fields */
+    border-color: #70c1ff; /* Change border color when focused */
+    box-shadow: 0 0 5px rgba(112, 193, 255, 0.5); /* Add shadow effect */
+}
+
+.settings-form h3 {
+    margin-top: 20px;
+    color: #c0c4d6;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}

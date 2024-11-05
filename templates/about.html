@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+        <title>About</title>
+        <meta content="" name="description" />
+        <meta content="" name="keywords" />
+
+        <!-- Favicons -->
+        <link href="/static/assets/img/logo.png" rel="icon" />
+        <link href="/static/assets/img/logo.png" rel="apple-touch-icon" />
+
+        <!-- Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"
+            rel="stylesheet"
+        />
+
+        <!-- Vendor CSS Files -->
+        <link
+            href="/static/assets/vendor/animate.css/animate.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="/static/assets/vendor/bootstrap/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css"
+            rel="stylesheet"
+        />
+        <link
+            href="/static/assets/vendor/swiper/swiper-bundle.min.css"
+            rel="stylesheet"
+        />
+
+        <!--  Main CSS File -->
+        <link href="/static/assets/css/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+                <!-- Include Font Awesome for icons in your <head> section -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+
+    <body>
+          <!-- ******* Property Search div ******* -->
+        <div class="click-closed"></div>
+        <!--/ Form Search Star /-->
+ <div class="box-collapse" style="background-color: white">
+     <div class="title-box-d">
+         <h3 class="title-d">Predict SquareFeet Price</h3>
+     </div>
+     <span class="close-box-collapse right-boxed bi bi-x"></span>
+     <div class="box-collapse-wrap form">
+         <form class="form-a" id="price-form" method="POST" action="/predict">
+             <div class="row">
+                 <div class="col-md-12 mb-2">
+                     <div class="form-group">
+                         <label class="pb-2" for="Sqft">Enter Sqft</label>
+                         <input
+                             type="text"
+                             class="form-control form-control-lg form-control-a"
+                             placeholder="Sqft"
+                             id="Sqft"
+                             name="sqft"
+                             required
+                         />
+                     </div>
+                 </div>
+                 <div class="col-md-6 mb-2">
+                     <div class="form-group mt-3">
+                         <label class="pb-2" for="District">District</label>
+                         <select
+                             class="form-control form-select form-control-a"
+                             id="District"
+                             name="district"
+                             onchange="updateAddresss()"
+                             required
+                         >
+                             <option value="">--Select District--</option>
+                             <option>Ariyalur</option>
+                             <option>Chengalpattu</option>
+                             <option>Chennai</option>
+                             <option>Coimbatore</option>
+                             <option>Cuddalore</option>
+                             <option>Dharmapuri</option>
+                             <option>Dindigul</option>
+                             <option>Erode</option>
+                             <option>Kallakurichi</option>
+                             <option>Kanchipuram</option>
+                             <option>Karur</option>
+                             <option>Krishnagiri</option>
+                             <option>Madurai</option>
+                             <option>Mayiladuthurai</option>
+                             <option>Nagapattinam</option>
+                             <option>Namakkal</option>
+                             <option>Ooty</option>
+                             <option>Perambalur</option>
+                             <option>Pudukkottai</option>
+                             <option>Ramanathapuram</option>
+                              <option>Salem</option>
+                              <option>Sivaganga</option>
+                              <option>Thanjavur</option>
+                              <option>Tiruvallur</option>
+                              <option>Tirunelveli</option>
+                              <option>Tiruppur</option>
+                              <option>Vellore</option>
+                              <option>Villupuram</option>
+                              <option>Virudhunagar</option>
+                             <!-- Add remaining districts here -->
+                         </select>
+                     </div>
+                 </div>
+                 <div class="col-md-6 mb-2">
+                     <div class="form-group mt-3">
+                         <label class="pb-2" for="Address">Address</label>
+                         <select
+                             class="form-control form-select form-control-a"
+                             id="Address"
+                             name="address"
+                             required
+                         >
+                             <option value="">--Select Address--</option>
+                         </select>
+                     </div>
+                 </div>
+             </div><br><br>
+             <div class="col-md-12">
+                 <div class="col-md-12">
+                     <button type="submit" class="btn btn-b">Predict Price</button>
+                 </div>
+                 <!-- Popup Modal -->
+                 <div id="popup" class="modal" style="display: none;">
+                     <div class="modal-content">
+                         <span class="close-button" onclick="closeModal()">&times;</span>
+                         <div id="predicted-price" style="font-weight: bold;">Your predicted price is...</div>
+                         
+                     </div>
+                 </div>
+             </div>   
+         </form>
+         
+     </div>
+ </div>
+ <style>
+     .modal {
+         position: fixed;
+         z-index: 1000;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         overflow: auto;
+         background-color: rgba(0,0,0,0.4);
+         display: flex;
+         justify-content: center;
+         align-items: center;
+     }
+     .modal-content {
+         background-color: #fefefe;
+         padding: 20px;
+         border: 1px solid #888;
+         width: 300px;
+         text-align: center;
+         position: relative;
+     }
+     .close-button {
+         color: #aaaaaa;
+         position: absolute;
+         top: 10px;
+         right: 15px;
+         font-size: 28px;
+         font-weight: bold;
+         cursor: pointer;
+     }
+     .close-button:hover,
+     .close-button:focus {
+         color: black;
+     }
+     .btn {
+         background-color: #007bff;
+         color: #fff;
+         padding: 10px 20px;
+         margin-top: 15px;
+         border: none;
+         cursor: pointer;
+         font-size: 16px;
+         border-radius: 4px;
+     }
+     .btn:hover {
+         background-color: #0056b3;
+     }
+ </style>
+ 
+     
+ 
+ 
+ <script>
+     const Addresss = {
+         "Ariyalur": ["Rajajinagar", "Near sivan kovil temple", "Ethraj Nagar"],
+         "Chengalpattu": ["Sai Nagar", "Alapakkam", "Pallava garden Pulipakkam", "Singaperumal Koil", "J C K Nagar", "Maraimalai Nagar", "Teachers Colony Nenmeli", "Sai Nagar Allapakkam", "Nenmeli", "Urapakkam", "Krishna nagar", "Chettipuniyam", "Mahindra World City", "Back side F8 cinemas Anna Nagar", "Paranur", "Chettipunniyam"],
+         "Chennai": ["West Jafferkhanpet", "Sithalapakkam", "Korattur", "Avadi", "Sholinganallur", "Kovur", "Alapakkam", "Thirupathi Nagar", "Anna nagar", "Ambattur", "VGP Layout Cholamandal Artists Village", "Navalur", "Porur", "Alwarpet", "RA Puram", "Chinna Neelankarai", "Kotturpuram"],
+         "Coimbatore": ["Saibaba Colony", "Pallapalayam", "Nehru nagar Housing unit", "Gandhi Park", "Kavundampalayam", "Venkitta Puram", "Othakalmandapam", "Venkatapuram", "Anna Nagar", "Peelamedu", "Malumichampatti", "Singanallur", "Krishna Garden Singanallur", "Sulur", "KK Pudur", "Selvapuram South", "Irugur", "Ganapathy", "Vilankurichi"],
+         "Cuddalore": ["Arumuganar Nagar", "Kumarapettai", "Graded Community", "Nayveli", "Chidambaram", "Koothapakkam", "Chavadi", "Tittakudi", "Vannarapalayam", "Vadalur", "Velisemmandalam", "Manjakuppam", "Virudhachalam", "Kondur", "Semmandalam", "Aanaikuppam"],
+         "Dharmapuri": ["Dharmapuri", "virupatchipuram", "Bharathipuram", "Gandhinagar", "Anjaneyur Kovil Street", "Pidamaneri", "Oddapatti", "Agraharam", "Karimangalam", "mathopu", "Palacode", "near municipal office", "Vediyappan thidhu", "Vennampatty", "Near ARP quarters", "Settikara", "TNHB colony", "Virupakshipuram", "Viswanathan nagar"],
+         "Dindigul": ["Modern nagar", "Chettinayakanpatti", "ellumaliyan nagar", "Moovendar Nagar", "MVM Nagar", "Oddanchatram", "Kaveri Nagar", "Thadikombu", "Nandavanapatti", "Begambur", "Devasahayam nagar", "Masilamanipuram", "GS NAGAR", "Mendonsa Colony", "Nagal Nagar", "Seelapadi Mahalakshmi Nagar", "Gujiliamparai", "nagal pudhur", "Arunachal nagar", "kamatchi nagar"],
+         "Erode": ["Perundurai Road", "B P Agraharam", "Mettukadai", "Sanjay Nagar", "Sampath Nagar", "Shastri Nagar", "Gobichettipalayam", "Solar Pirivu", "Modakurichi", "Veerappanchatram", "Erode Fort", "Teachers Colony", "Veepampalayam", "Thindal", "Chithode", "NEAR BVB CBSC SCHOOL"],
+         "Kallakurichi": ["Vasanthi illam"],
+         "Kanchipuram": ["Enathur", "Sevlimedu", "Kolathur", "Kancheepuram", "Chengalpattu", "Konerikuppam", "Pillayar palayam", "Chinna Kanchipuram", "Pillaiyarpalayam", "Abdullapuram", "Casagrand Arena", "Ennaikaran", "GV Construction Kanchipuram"],
+         "Kanyakumari": ["Ponnappa Nadar Colony", "Thuckalay", "Karungal", "Kulasekharam", "Suchindram", "Nagercoil", "Kottaram", "neela kanda swamy temple", "Asaripallam", "Agasteeswaram", "Palliyadi", "Vellamadam", "Vettuvenni", "palliyady", "Marthandam"],
+         "Karur": ["Vadivel Nagar", "Vennamalai", "Anbu Nagar", "Jawahar Bazaar", "Gowripuram extension2nd cross", "Andankoil East", "Rayanur", "Gandhigramam", "Thanthonimalai", "Vengamedu", "Reddipalayam", "Kamarajapuram", "Gandhigramam", "Gandhi Puram"],
+         "Krishnagiri": ["Kundarapalli", "Bargur", "Kattiganapalli", "Appanna Rao Street", "Sathya Sai Nagar", "MIG 153 1st Phase New Housing Board", "Pochampalli", "Shoolagiri", "Kaveripattinam", "Thiruvalluvar nagar", "TNHB", "Karapalli", "Kathujuganapalli", "Natarajan Layout", "Mookondapalli", "Somarpettai", "Eluvappalli", "Peddathalapalli", "Rajaji Nagar 7th Cross", "VKN stores", "Mathigiri"],
+         "Madurai": ["Nehru Nagar", "Nataraja Nagar", "Gomathipuram", "Vilangudi", "Otthakadai", "S Alangulam", "Kalavasal", "Mattuthavani", "Nagamalaipudukottai", "Surya Nagar", "Thiruparankundram", "Anaiyur", "Keelavasal", "Thiruppalai", "Sikkandar Savadi", "TPM NagarVirattipathu", "Avaniyapuram", "Uthangudi", "Muthu Patti", "Paravai", "THEPPAKULAM", "Alagappan Nagar"],
+         "Mayiladuthurai": ["Kamarajar Salai", "Koranad", "Nalathukkudi", "Cauvery nagar", "Senthangudi", "Dharmapuram"],
+         "Nagapattinam": ["Manjakollai", "Neela North Street", "Mayiladuthurai", "kilvelur", "Velippalayam"],
+         "Namakkal": ["Cauvery nagar", "Andavar Nagar", "Vathiyar thottam Rasipuram", "Mullai Nagar AS Pettai", "Tiruchengode", "Periyannan street RP pudur", "Bodhu Patty", "kongunagar namakka", "Kondichettipatti", "NGO Colony Chinnamuthalaipatti", "KMC Street", "Anbu Nagar2", "Salem Road RP pudur", "Kosavampatti", "S P Pudur", "Magilam residancy  Budan Santhai", "Ganga Nagar", "RP Pudur", "Thiruvalluvar Colony", "Kamaraj Nagar", "Chinnamuthalaipatti"],
+         "Ooty": ["Kotagiri", "Muthorai Palada", "Coonoor", "Fern Hill", "Ooty liberty theater Upper Bazar", "Havelock Road Sai Dharshan", "Main City", "Coonoor main city"],
+         "Perambalur": ["Eruvadi", "Alundur", "Vellalapatti", "Peddanapatti", "Oothukottai", "Selva Nagar", "Sappani", "Sikkandar", "Srikaranai", "Pothanur", "Peraiyur", "Pattakudi"],
+         "Pudukkottai": ["Pudukkottai", "Thiruvarankulam", "Kandarvakkottai", "Thiruvarankulam", "Pudukkottai"],
+         "Ramanathapuram": ["Peraiyur", "Palakkudi", "Karaikudi", "Katchal", "Koodal", "Kilakarai", "Maruthur", "Muthupatti", "Muthupatti", "Koodal", "Maruthur", "Ramanathapuram"],
+         "Salem": ["Loyola College", "Sundaravadi", "Sankari", "Salem City", "Omalur", "Mettur", "Erode Main Road", "Sankari", "Alagapuram", "Karuvadi", "Brahmapuram", "Kalipatti", "Pallapatti", "Ganesh Nagar"],
+         "Sivaganga": ["Kumaran Kovil", "Sivaganga", "Puthupatti", "Kattur", "Vallinayakanpatti", "Puthupatti", "Annavasal", "Thekkur", "Puthu Kulam", "Kottaiyur", "Vembakkottai", "Vembakkottai", "Kumaran Kovil", "Nagarathar", "Tiruppuvanam"],
+         "Thanjavur": ["Thanjavur", "Muthurajapuram", "Valangaiman", "Mankottai", "Thirukokarnam", "Puthuthalainayakan", "Thirukkandiyur", "Rudrasai", "Sakkottai", "Kothangudi", "Nadavarayanpatti"],
+         "Tiruvallur": ["Ibrahim patnam", "Periyapalayam", "Kundrathur", "Nandi Kovil", "Madhavaram", "Vadamadurai", "Redhills", "Pakkam", "Siddha Bavi", "Sriperumbudur", "Thirumazhisai", "Thirunindravur", "Tiruvallur"],
+         "Tirunelveli": ["Tirunelveli", "Raja Nagar", "Tenkasi", "Alangulam", "Puthiamputhur", "Vellamundam", "Ettaiyapuram", "Shenkottai", "Nellai", "Thirumangalam", "Sankarankovil"],
+         "Tiruppur": ["Pudupatti", "Kangayam", "Tiruppur", "Palladam", "Perumanallur", "Kaniyur", "Sivasakthi Nagar", "Pattaiyadi", "Sanjay Nagar", "Karamadai", "Chinnappampatti", "Kongu Nagar", "Vettuvankulam", "Dharamapuri", "Vettuvankulam"],
+         "Vellore": ["Alamelumangapuram", "Governer's Garden", "Tiruvannamalai", "Jainschool", "Puthur", "Uthangarai", "Ameerpet", "Kottakuppam", "Vaniyambadi", "Kammiyampettai", "Puthur", "Sathuvachari", "Puduvettai", "Jakkar", "Thunjaipallam", "Tiruvalangadu"],
+         "Villupuram": ["Villupuram", "Kandachipuram", "Mangalampadi", "Nambiyur", "Elavanasur", "Chennasamy Nagar", "Karuvakkadu", "Vadakkupattu", "Kamakshipuram", "Puthur", "Kottapattu", "J K Nagar", "Kakkaiyur", "Vikramangalam", "Boganapudi", "Vadipatti", "Mettukudi", "Sankaranpatti", "Melmaruvathur", "Nambiyur", "Nambiyur", "Sivaganga", "Nagapattinam"],
+         "Virudhunagar": ["Virudhunagar", "Sivakasi", "Kamaraj Nagar", "Muthupatti", "Sangam Nagar", "Mottapatti", "Kottaiyur", "Sakkottai", "Rajapalayam", "Sivakasi", "Virudhunagar", "Muthupatti", "Akkampatti", "Thiruthangal", "Kothai", "Tiruchuli"]
+ 
+     };
+ 
+     function updateAddresss() {
+         const districtSelect = document.getElementById('District');
+         const addressSelect = document.getElementById('Address');
+ 
+         // Clear previous options
+         addressSelect.innerHTML = '<option value="">--Select Address--</option>';
+ 
+         // Get the selected district
+         const selectedDistrict = districtSelect.value;
+ 
+         // Populate the address dropdown based on the selected district
+         if (selectedDistrict in Addresss) {
+             Addresss[selectedDistrict].forEach(function(address) {
+                 const option = document.createElement('option');
+                 option.value = address;
+                 option.textContent = address;
+                 addressSelect.appendChild(option);
+             });
+         }
+     }
+     document.getElementById('price-form').onsubmit = function(event) {
+         event.preventDefault();
+         
+         const formData = new FormData(this);
+         
+         fetch('/predict', {
+             method: 'POST',
+             body: formData,
+         })
+         .then(response => response.text())
+         .then(priceText => {
+             document.getElementById('predicted-price').innerHTML = priceText;
+             document.getElementById('popup').style.display = 'flex';
+         })
+         .catch(error => {
+             console.error('Error:', error);
+             document.getElementById('predicted-price').innerText = 'An error occurred while predicting the price.';
+             document.getElementById('popup').style.display = 'flex';
+         });
+     };
+ 
+     function closeModal() {
+         document.getElementById('popup').style.display = 'none';
+     }
+ 
+ 
+ </script>
+ <!-- ******* Header/Navbar ******* -->
+ <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top" style="background-color: white;">
+     <div class="container">
+         <button
+             class="navbar-toggler collapsed"
+             type="button"
+             data-bs-toggle="collapse"
+             data-bs-target="#navbarDefault"
+             aria-controls="navbarDefault"
+             aria-expanded="false"
+             aria-label="Toggle navigation"
+         >
+             <span></span>
+             <span></span>
+             <span></span>
+         </button>
+         
+         <a class="navbar-brand text-brand" href="/">Rent<span class="color-b">Findr</span></a>
+ 
+         <div class="collapse navbar-collapse justify-content-center" id="navbarDefault">
+             <ul class="navbar-nav">
+                 <li class="nav-item">
+                     <a class="nav-link " href="/">Home</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link active" href="/about.html">About</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="/property-grid.html">Property</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="/contact.html">Contact</a>
+                 </li>
+                 {% if user_logged_in %}
+                 <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                         <i class="fa-solid fa-user-secret"></i>
+                     </a>
+                     <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                         <li><span class="dropdown-item">Welcome, {{ username }}!</span></li>
+                         <li><span class="dropdown-item">Looking For: {{ looking_for }}</span></li>
+                         <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>  <!-- Link to the dashboard -->
+                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                     </ul>
+                 </li>
+                 {% else %}
+                 <li class="nav-item">
+                     <a class="nav-link " href="/login.html">Login</a>
+                 </li>
+                 {% endif %}
+ 
+                 
+             </ul>
+             
+             
+         </div>
+         
+         <button
+                     type="button"
+                     class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
+                     data-bs-toggle="collapse"
+                     data-bs-target="#navbarTogglerDemo01"
+                     >
+                     <img src="/static/assets/img/icon.png" alt="Search Icon">
+                 </button>
+     </div>
+ </nav>
+ 
+ 
+        <main id="main">
+            <!-- ======= Intro Single ======= -->
+            <section class="intro-single">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-8">
+                            <div class="title-single-box">
+                                <h1 class="title-single">
+                                    We help you  find your next home!
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <nav
+                                aria-label="breadcrumb"
+                                class="breadcrumb-box d-flex justify-content-lg-end"
+                            >
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="{{ url_for('index') }}">Home</a>
+                                    </li>
+                                    <li
+                                        class="breadcrumb-item active"
+                                        aria-current="page"
+                                    >
+                                        About
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End Intro Single-->
+
+            <!-- ======= About Section ======= -->
+            <section class="section-about">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 position-relative">
+                            <div class="about-img-box">
+                                <img
+                                    src="/static/assets/img/slide-about-1.jpg"
+                                    alt=""
+                                    class="img-fluid"
+                                />
+                            </div>
+                            <div class="sinse-box">
+                                <h3 class="sinse-title">
+                                    RentFindr
+                                    <span></span>
+                                    <br />
+                                    Since 2024
+                                </h3>
+                                <p>"Home is a place where you can make memories that will last a lifetime."</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 section-t8 position-relative">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-5">
+                                    <img
+                                        src="/static/assets/img/about-2.jpg"
+                                        alt=""
+                                        class="img-fluid"
+                                    />
+                                </div>
+                                <div
+                                    class="col-lg-2 d-none d-lg-block position-relative"
+                                >
+                                    <div
+                                        class="title-vertical d-flex justify-content-start"
+                                    >
+                                        <span>RentFindr Exclusive Property</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-5 section-md-t3">
+                                    <div class="title-box-d">
+                                        <h3 class="title-d">
+                                            Meet 
+                                            <span class="color-d"
+                                                >RentFindr's</span
+                                            >
+                                            Worldclass <br />
+                                            Team.
+                                        </h3>
+                                    </div>
+                                    <p class="color-text-a">
+                                        In the dynamic world of real estate, success isn't merely the result of individual prowess; it's the culmination of collaborative effort. Whether it's buying, selling, or managing properties, teamwork forms the cornerstone of achievement in this industry. 
+                                        
+                                        From agents and brokers to property managers and investors, each member of the real estate ecosystem plays a vital role in navigating the complexities of the market.
+
+                                    </p>
+                                    <p class="color-text-a">
+                                        A cohesive team can provide comprehensive support, offering insights, addressing concerns, and tailoring solutions to meet clients' specific needs. 
+                                        Moreover, the availability of multiple team members ensures that clients receive prompt assistance, fostering trust and satisfaction.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =======Team Section ======= -->
+            <section class="section-agents section-t8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div
+                                class="title-wrap d-flex justify-content-between"
+                            >
+                                <div class="title-box">
+                                    <h2 class="title-a">Meet Our Team</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card-box-d">
+                                <div class="card-img-d">
+                                    <img
+                                        src="/static/assets/img/gokul.jpg"
+                                        alt=""
+                                        class="img-d img-fluid"
+                                    />
+                                </div>
+                                <div class="card-overlay card-overlay-hover">
+                                    <div class="card-header-d">
+                                        <div
+                                            class="card-title-d align-self-center"
+                                        >
+                                            <h3 class="title-d">
+                                                <a
+                                                    href="agent-single.html"
+                                                    class="link-two"
+                                                    >Gokul.M <br />
+                                                    Coimbatore</a
+                                                >
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body-d">
+                                        <p class="content-d color-text-a">
+                                            Bachelor of Engineering "Computer Science and Engineering" At SNS College of Engineering Coimbatore                                        </p>
+                                        <div class="info-agents color-a">
+                                            <p>
+                                                <strong>Phone: </strong> +91 123-456-7891
+                                            </p>
+                                            <p>
+                                                <strong>Email: </strong>
+                                                rentfinder@gmail.com
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-box-d">
+                                <div class="card-img-d">
+                                    <img
+                                        src="/static/assets/img/Ram.png"
+                                        alt=""
+                                        class="img-d img-fluid"
+                                    />
+                                </div>
+                                <div class="card-overlay card-overlay-hover">
+                                    <div class="card-header-d">
+                                        <div
+                                            class="card-title-d align-self-center"
+                                        >
+                                            <h3 class="title-d">
+                                                <a
+                                                    href="agent-single.html"
+                                                    class="link-two"
+                                                    >Ramnath.S<br />
+                                                    Coimbatore</a
+                                                >
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body-d">
+                                        <p class="content-d color-text-a">
+                                            Bachelor of Engineering "Mechanical Engineering" At SNS College of Engineering Coimbatore                                        </p>
+                                        <div class="info-agents color-a">
+                                            <p>
+                                                <strong>Phone: </strong> +91 123-456-7891
+                                            </p>
+                                            <p>
+                                                <strong>Email: </strong>
+                                                rentfinder@gmail.com
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-box-d">
+                                <div class="card-img-d">
+                                    <img
+                                        src="/static/assets/img/harish .jpg"
+                                        alt=""
+                                        class="img-d img-fluid"
+                                    />
+                                </div>
+                                <div class="card-overlay card-overlay-hover">
+                                    <div class="card-header-d">
+                                        <div
+                                            class="card-title-d align-self-center"
+                                        >
+                                            <h3 class="title-d">
+                                                <a
+                                                    href="agent-single.html"
+                                                    class="link-two"
+                                                    >Harish Kumar B.R <br />
+                                                    Coimbatore</a
+                                                >
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body-d">
+                                        <p class="content-d color-text-a">
+                                            Bachelor of Engineering "Mechatronics" At SNS College of Engineering Coimbatore                                        </p>
+                                        <div class="info-agents color-a">
+                                            <p>
+                                                <strong>Phone: </strong> +91 123-456-7891
+                                            </p>
+                                            <p>
+                                                <strong>Email: </strong>
+                                                rentfinder@gmail.com
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <style>
+                            .last-person-row {
+                                margin-top: 40px; /* Adjust the value as needed */
+                         }
+                        </style>
+
+                        <div class="row last-person-row justify-content-center">
+                        <div class="col-md-4">
+                            <div class="card-box-d">
+                                <div class="card-img-d">
+                                    <img
+                                        src="/static/assets/img/sak.jpg"
+                                        alt=""
+                                        class="img-d img-fluid"
+                                    />
+                                </div>
+                                <div class="card-overlay card-overlay-hover">
+                                    <div class="card-header-d">
+                                        <div
+                                            class="card-title-d align-self-center"
+                                        >
+                                            <h3 class="title-d">
+                                                <a
+                                                    href="agent-single.html"
+                                                    class="link-two"
+                                                    >Shakthi Krishnan <br />
+                                                    Coimbatore</a
+                                                >
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body-d">
+                                        <p class="content-d color-text-a">
+                                    Bachelor of Engineering "Internet of Things" At SNS College of Engineering Coimbatore</p>
+                                        <div class="info-agents color-a">
+                                            <p>
+                                                <strong>Phone: </strong> +91 123-456-7891
+                                            </p>
+                                            <p>
+                                                <strong>Email: </strong>
+                                                rentfinder@gmail.com
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End About Section-->
+        </main>
+        <!-- End #main -->
+
+        <!-- ======= Footer ======= -->
+        <section class="section-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <div class="widget-a">
+                            <div class="w-header-a">
+                                <h3 class="w-title-a text-brand">RentFindr</h3>
+                            </div>
+                            <div class="w-body-a">
+                                <p class="w-text-a color-text-a">
+                                    Get ready to discover the perfect place to call home, right next door. Welcome to a world of possibilities, welcome to Rent Findr.
+                                </p>
+                            </div>
+                            <div class="w-footer-a">
+                                <ul class="list-unstyled">
+                                    <li class="color-a">
+                                        <span class="color-text-a"
+                                            >Phone .</span
+                                        >
+                                        rentfindr@gmail.com
+                                    </li>
+                                    <li class="color-a">
+                                        <span class="color-text-a"
+                                            >Email .</span
+                                        >
+                                        +91 123-456-7891
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-12 col-md-4 section-md-t3">
+                        <div class="widget-a">
+                            <div class="w-header-a">
+                                <h3 class="w-title-a text-brand">
+                                    The Company
+                                </h3>
+                            </div>
+                            <div class="w-body-a">
+                                <div class="w-body-a">
+                                    <ul class="list-unstyled">
+                                        <li class="item-list-a">
+                                            <i class="bi bi-chevron-right"></i>
+                                            <a href="contact.html">Site Map</a>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 section-md-t3">
+                        <div class="widget-a">
+                            <div class="w-header-a">
+                                <h3 class="w-title-a text-brand">
+                                    Our Services
+                                </h3>
+                            </div>
+                            <div class="w-body-a">
+                                <ul class="list-unstyled">
+                                    <li class="item-list-a">
+                                        <i class="bi bi-chevron-right"></i>
+                                        <a href="property-grid.html">Apartment Rent</a>
+                                    </li>
+                                    <li class="item-list-a">
+                                        <i class="bi bi-chevron-right"></i>
+                                        <a href="property-grid.html">House Rent</a>
+                                    </li>
+                                    <li class="item-list-a">
+                                        <i class="bi bi-chevron-right"></i>
+                                        <a href="property-grid.html">Land Lease</a>
+                                    </li>
+                                    <li class="item-list-a">
+                                        <i class="bi bi-chevron-right"></i>
+                                        <a href="property-grid.html">Villa Rent</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav class="nav-footer">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a href="index.html">Home</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="about.html">About</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="property-grid.html">Property</a>
+                                </li>
+                                
+                                <li class="list-inline-item">
+                                    <a href="contact.html">Contact</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="socials-a">
+                            <ul class="list-inline">
+                                <li
+                                    class="list-inline-item"
+                                >
+                                    <a
+                                        href="https://www.facebook.com/snsinstitutions/photos/?_rdr"
+                                        class="link-one"
+                                    >
+                                        <i
+                                            class="bi bi-facebook"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </a>
+                                </li>
+                                <li
+                                    class="list-inline-item"
+                                >
+                                    <a
+                                        href="https://x.com/snsinstitutions"
+                                        class="link-one"
+                                    >
+                                        <i
+                                            class="bi bi-twitter"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </a>
+                                </li>
+                                <li
+                                    class="list-inline-item"
+                                >
+                                    <a
+                                        href="https://www.instagram.com/snsinstitutions/?hl=en"
+                                        class="link-one"
+                                    >
+                                        <i
+                                            class="bi bi-instagram"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </a>
+                                </li>
+                                <li
+                                    class="list-inline-item"
+                                >
+                                    <a
+                                        href="https://www.linkedin.com/school/snsinstitutions/posts/?feedView=all"
+                                        class="link-one"
+                                    >
+                                        <i
+                                            class="bi bi-linkedin"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="copyright-footer">
+                            <p class="copyright color-text-a">
+                                &copy; Copyright
+                                <span class="color-a">RentFindr</span> All Rights
+                                Reserved.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End  Footer -->
+
+        <div id="preloader"></div>
+        <a
+            href="#"
+            class="back-to-top d-flex align-items-center justify-content-center"
+            ><i class="bi bi-arrow-up-short"></i
+        ></a>
+
+        <!--JS Files -->
+        <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="/static/assets/vendor/php-email-form/validate.js"></script>
+
+        <!-- Main JS File -->
+        <script src="/static/assets/js/main.js"></script>
+    </body>
+</html>

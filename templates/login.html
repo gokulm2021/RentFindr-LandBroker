@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/assets/css/sty.css"> <!-- Custom CSS -->
+    <link href="/static/assets/img/logo.png" rel="icon" />
+    <link href="/static/assets/img/logo.png" rel="apple-touch-icon" />
+    <style>
+        body {
+            background: url('/static/assets/img/5072616.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Roboto', sans-serif;
+            color: #f5f5f5;
+            margin: 0;
+        }
+    
+        .container {
+            max-width: 400px;
+            background-color: rgba(15, 15, 35, 0.7); /* Adjusted to be more transparent */
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow for depth */
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(15px); /* Increased blur effect for a frosted glass look */
+            width: 100%; /* Ensures it adapts well on smaller screens */
+            margin: 0 1rem;
+        }
+    
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); /* Stronger shadow on hover */
+        }
+    
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #70c1ff;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+    
+        input[type="email"], input[type="password"] {
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            border: 1px solid #3a3d4a;
+            background-color: rgba(27, 30, 47, 0.8); /* More transparent input fields */
+            color: #f5f5f5;
+            transition: border-color 0.3s;
+            padding: 10px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box; /* Makes sure padding does not affect width */
+        }
+    
+        input[type="email"]:focus, input[type="password"]:focus {
+            border-color: #70c1ff;
+            box-shadow: 0 0 5px rgba(112, 193, 255, 0.5);
+        }
+    
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #70c1ff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+    
+        .login-btn:hover {
+            background-color: #0073e6;
+            transform: scale(1.05);
+        }
+    
+        p {
+            text-align: center;
+            margin-top: 1rem;
+            color: #c0c4d6;
+        }
+    
+        #login-message {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+    
+        .message-success {
+            background-color: #3a7c4e;
+            color: #e0ffe0;
+        }
+    
+        .message-error {
+            background-color: #7c3a3a;
+            color: #ffe0e0;
+        }
+    
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+    
+            h2 {
+                font-size: 1.6rem;
+            }
+    
+            input[type="email"], input[type="password"] {
+                font-size: 0.9rem;
+            }
+    
+            .login-btn {
+                font-size: 1rem;
+            }
+    
+            p {
+                font-size: 0.9rem;
+            }
+    
+            #login-message {
+                font-size: 0.85rem;
+            }
+        }
+    
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.2rem;
+                max-width: 90%;
+            }
+    
+            h2 {
+                font-size: 1.4rem;
+            }
+    
+            input[type="email"], input[type="password"] {
+                font-size: 0.85rem;
+            }
+    
+            .login-btn {
+                font-size: 0.95rem;
+            }
+    
+            p {
+                font-size: 0.85rem;
+            }
+    
+            #login-message {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+    
+    
+    
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2><i class="fas fa-user-lock"></i> Login</h2>
+            <form id="login-form">
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <button type="submit" class="btn login-btn">Login</button>
+                <div id="login-message"></div>
+                <p>Don't have an account? <a href="signup.html">Signup Here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('login-form').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(this);
+        const data = {
+            email: formData.get('email'),
+            password: formData.get('password')
+        };
+
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // Ensure JSON content type
+                },
+                body: JSON.stringify(data) // Send data as JSON
+            });
+
+            const result = await response.json();
+            const messageDiv = document.getElementById('login-message');
+
+            // Set message content
+            messageDiv.textContent = result.message;
+            messageDiv.style.display = 'block'; // Make message visible
+            messageDiv.className = ''; // Clear previous classes
+
+            if (response.ok) {
+                // If login is successful, display message in green and redirect
+                messageDiv.classList.add('message-success');
+                setTimeout(() => {
+                    window.location.href = '/'; // Redirect to the home page
+                }, 1000); // Optional delay before redirecting
+            } else {
+                // If login failed, display message in red
+                messageDiv.classList.add('message-error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            const messageDiv = document.getElementById('login-message');
+            messageDiv.textContent = 'An error occurred. Please try again later.';
+            messageDiv.style.display = 'block'; // Make message visible
+            messageDiv.className = 'message-error'; // Show error style
+        }
+    });
+    </script>
+
+</body>
+</html>

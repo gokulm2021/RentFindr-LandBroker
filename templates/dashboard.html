@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="../static/assets/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="static/assets/img/logo.png" rel="icon" />
+        <link href="static/assets/img/logo.png" rel="apple-touch-icon" />
+</head>
+<body>
+    <div class="dashboard-box">
+        
+        <div class="dashboard-content">
+            <!-- Welcome Section -->
+            
+            <section id="home" class="section welcome">
+                <h1>Welcome, {{ username }}!</h1>
+                <div class="profile-image-container">
+                    <img src="{{ url_for('static', filename='uploads/' + (profile_picture if profile_picture else 'default.jpg')) }}" alt="User Profile Picture" id="profileImage">
+                    <button class="back-button" onclick="window.history.back();">
+                        <i class="fas fa-arrow-left back-icon"></i> Back
+                    </button>
+                </div>
+            </section>
+            
+            <!-- Profile Section -->
+            <section id="profile" class="section profile">
+                <h2>Your Profile</h2>
+                <p>Name: {{ username }}</p>
+                <p>Email: {{ user_email }}</p>
+                <p>Looking for: {{ looking_for }}</p>
+
+                <form id="edit-username-form" class="settings-form" onsubmit="return updateUsername(event)">
+                    <h3>Edit Username:</h3>
+                    <input type="text" id="newUsername" placeholder="New Username" required>
+                    <button type="submit">Update Username</button>
+                </form>
+            </section>
+    
+            <section id="settings" class="section settings">
+                <h2>Settings</h2>
+                <div id="message-container" class="message-container"></div>
+    
+                <form id="update-email-form" class="settings-form">
+                    <h3>Update Email</h3>
+                    <input type="email" id="newEmail" placeholder="New Email" required>
+                    <button type="submit">Update Email</button>
+                </form>
+    
+                <form id="update-password-form" class="settings-form">
+                    <h3>Update Password</h3>
+                    <input type="password" id="newPassword" placeholder="New Password" required>
+                    <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" required>
+                    <button type="submit">Update Password</button>
+                </form>
+    
+                <button id="delete-account-button">Delete Account</button>
+                <button class="logout-button"><a href="{{ url_for('logout') }}">Logout</a></button>
+            </section>
+        </div>
+
+        <!-- Delete Account Confirmation Modal -->
+        <div id="delete-account-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Confirm Deletion</h2>
+                <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                <button id="confirm-delete-button" class="danger-button">Delete Account</button>
+                <button id="cancel-delete-button">Cancel</button>
+            </div>
+        </div>
+    </div>    
+    
+    <script>
+        function showMessage(type, message) {
+    const messageContainer = document.getElementById('message-container');
+    
+   
+    
+    // Determine the icon and apply the style based on message type
+    let iconHTML = '';
+    if (type === 'success') {
+        messageContainer.classList.add('message-success');
+        iconHTML = '<span style="margin-right: 10px;">&#x2714;</span>'; // Checkmark icon for success
+    } else if (type === 'error') {
+        messageContainer.classList.add('message-error');
+        iconHTML = '<span style="margin-right: 10px;">&#x26A0;</span>'; // Warning icon for error
+    }
+    
+    // Set message content with icon and display the container
+    messageContainer.innerHTML =  message;
+    messageContainer.style.display = 'block';
+    messageContainer.style.opacity = '1';
+    messageContainer.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    messageContainer.style.transform = 'translateY(0)';
+
+    // Hide the message after 3 seconds with fade-out effect
+    setTimeout(() => {
+        messageContainer.style.opacity = '0';
+        messageContainer.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+            messageContainer.style.display = 'none';
+        }, 300); // Wait for fade-out transition to complete before hiding
+    }, 3000);
+}
+
+
+// Update Username
+document.getElementById('edit-username-form').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const newUsername = document.getElementById('newUsername').value;
+
+    try {
+        const response = await fetch('/update-username', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Ensure JSON content type
+            },
+            body: JSON.stringify({ username: newUsername })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            showMessage('success', result.message); // Pass type as 'success'
+            setTimeout(() => {
+                window.location.reload(); // Reload the page
+            }, 1000); // Optional: delay for 1 second before reloading
+        } else {
+            showMessage('error', result.message); // Pass type as 'error'
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showMessage('error', "An error occurred while updating username."); // Show error message
+    }
+
+});
+
+
+
+// Update Email
+document.getElementById('update-email-form').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const newEmail = document.getElementById('newEmail').value;
+
+    try {
+    const response = await fetch('/update-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Ensure JSON content type
+        },
+        body: JSON.stringify({ email: newEmail })
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+        showMessage('success', result.message); // Pass type as 'success'
+        setTimeout(() => {
+                window.location.reload(); // Reload the page
+            }, 1000); // Optional: delay for 1 second before reloading
+    } else {
+        showMessage('error', result.message); // Pass type as 'error'
+    }
+} catch (error) {
+    console.error('Error:', error);
+    showMessage('error', "An error occurred while updating email."); // Show error message
+}
+
+});
+
+// Update Password
+document.getElementById('update-password-form').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+    if (newPassword !== confirmNewPassword) {
+        showMessage("Passwords do not match!", false); // Show error message
+        return;
+    }
+
+    try {
+    const response = await fetch('/update-password', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Ensure JSON content type
+        },
+        body: JSON.stringify({ password: newPassword })
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+        showMessage('success', result.message); // Pass type as 'success'
+        window.location.href = '/login.html'; // Redirect to login after deletion
+    } else {
+        showMessage('error', result.message); // Pass type as 'error'
+    }
+} catch (error) {
+    console.error('Error:', error);
+    showMessage('error', "An error occurred while updating password."); // Show error message
+}
+
+});
+
+// Delete Account
+
+// Get modal elements
+const deleteAccountModal = document.getElementById('delete-account-modal');
+const closeButton = document.querySelector('.close-button');
+const cancelDeleteButton = document.getElementById('cancel-delete-button');
+const confirmDeleteButton = document.getElementById('confirm-delete-button');
+
+// Delete Account
+document.getElementById('delete-account-button').addEventListener('click', function() {
+    // Show the modal
+    deleteAccountModal.style.display = 'block';
+});
+
+// Close the modal
+closeButton.onclick = function() {
+    deleteAccountModal.style.display = 'none';
+}
+
+cancelDeleteButton.onclick = function() {
+    deleteAccountModal.style.display = 'none';
+}
+
+// Confirm deletion
+confirmDeleteButton.addEventListener('click', async function() {
+    try {
+        const response = await fetch('/delete-account', {
+            method: 'DELETE'
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            showMessage('success', result.message); // Pass type as 'success'
+            window.location.href = '/login.html'; // Redirect to login after deletion
+        } else {
+            showMessage('error', result.message); // Pass type as 'error'
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showMessage('error', "An error occurred while deleting account."); // Show error message
+    } finally {
+        deleteAccountModal.style.display = 'none'; // Hide the modal
+    }
+});
+
+
+// Close the modal when clicking outside of it
+window.onclick = function(event) {
+    if (event.target === deleteAccountModal) {
+        deleteAccountModal.style.display = 'none';
+    }
+}
+
+
+    </script>
+    
+    
+</body>
+</html>
