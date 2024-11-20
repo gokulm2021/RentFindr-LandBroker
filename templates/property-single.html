@@ -1,3 +1,50 @@
+<!-- <section class="property-single">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div id="property-single-carousel" class="swiper">
+                    <div class="swiper-wrapper">
+                        {% for img in property.images %}
+                            <div class="carousel-item-b swiper-slide">
+                                <img src="{{ img }}" alt="Property Image">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="property-price">
+                    <h3>{{ property.price }} ₹</h3>
+                </div>
+                <div class="property-summary">
+                    <h3>Quick Summary</h3>
+                    <ul>
+                        <li><strong>Property ID:</strong> {{ property._id }}</li>
+                        <li><strong>Location:</strong> {{ property.location }}</li>
+                        <li><strong>Type:</strong> {{ property.type }}</li>
+                        <li><strong>Status:</strong> {{ property.status }}</li>
+                        <li><strong>Area:</strong> {{ property.area }} m²</li>
+                        <li><strong>Beds:</strong> {{ property.beds }}</li>
+                        <li><strong>Baths:</strong> {{ property.baths }}</li>
+                        <li><strong>Yard:</strong> {{ property.yards }}</li>
+                    </ul>
+                </div>
+                <div class="property-description">
+                    <h3>Property Description</h3>
+                    <p>{{ property.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,8 +63,6 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" />
 
-    <!-- Include Font Awesome for icons in your <head> section -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Vendor CSS Files -->
     <link href="/static/assets/vendor/animate.css/animate.min.css" rel="stylesheet" />
     <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -28,6 +73,9 @@
     <link href="/static/assets/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+
+    <!-- Include Font Awesome for icons in your <head> section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -315,9 +363,6 @@
             </button>
         </div>
     </nav>
-
-
-
     <main id="main">
         <!-- ======= Intro Single ======= -->
         <section class="intro-single">
@@ -325,22 +370,16 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-8">
                         <div class="title-single-box">
-                            <h1 class="title-single">038 Modern Town House</h1>
-                            <span class="color-text-a">Saibaba Colony Coimbatore-641038</span>
+                            <h1 class="title-single">{{ property.name }}</h1>
+                            <span class="color-text-a">{{ property.location }}</span>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-4">
                         <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="{{ url_for('index') }}">Home</a>
-                                </li>
-                                <li class="breadcrumb-item">
-                                    <a href="property-grid.html">Properties</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    038 Modern Town House
-                                </li>
+                                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url_for('property_grid') }}">Properties</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ property.name }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -356,9 +395,18 @@
                     <div class="col-lg-8">
                         <div id="property-single-carousel" class="swiper">
                             <div class="swiper-wrapper">
+                                {% for image in property.images %}
                                 <div class="carousel-item-b swiper-slide">
-                                    <img src="/static/assets/img/property-10.jpg" alt="" />
+                                    {% for image in property.images %}
+                                    <img src="{{ image }}" alt="Property Image" class="img-a img-fluid" />
+                                    {% endfor %}
+                                    {% else %}
+                                    <img src="{{ url_for('static', filename='assets/img/default-image.png') }}"
+                                        alt="Default Image" class="img-a img-fluid" />
                                 </div>
+                                {% endfor %}
+
+
                             </div>
                         </div>
                         <div class="property-single-carousel-pagination carousel-pagination"></div>
@@ -375,7 +423,7 @@
                                             <span class="bi bi-cash"> ₹</span>
                                         </div>
                                         <div class="card-title-c align-self-center">
-                                            <h5 class="title-c">15,000</h5>
+                                            <h5 class="title-c">{{ property.price }}</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -383,48 +431,44 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="title-box-d section-t4">
-                                                <h3 class="title-d">
-                                                    Quick Summary
-                                                </h3>
+                                                <h3 class="title-d">Quick Summary</h3>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="summary-list">
                                         <ul class="list">
                                             <li class="d-flex justify-content-between">
-                                                <strong>Property ID:</strong>
-                                                <span>038</span>
+                                                <strong>Property Pincode:</strong>
+                                                <span>{{ property.pincode }}</span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Location:</strong>
-                                                <span>Coimbatore,Saibaba Colony-641038
-                                                </span>
+                                                <span>{{ property.location }}</span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Property Type:</strong>
-                                                <span>Modern Town House </span>
+                                                <span>{{ property.type }}</span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Status:</strong>
-                                                <span>Sale</span>
+                                                <span>{{ property['sale_status'] }}</span>
+                                                <!-- Use 'sale_status' here -->
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Area:</strong>
-                                                <span>340m
-                                                    <sup>2</sup>
-                                                </span>
+                                                <span>{{ property.area }} m<sup>2</sup></span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Beds:</strong>
-                                                <span>4</span>
+                                                <span>{{ property.beds }}</span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Baths:</strong>
-                                                <span>2</span>
+                                                <span>{{ property.baths }}</span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Yard:</strong>
-                                                <span>1</span>
+                                                <span>{{ property.yards }}</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -434,46 +478,34 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="title-box-d">
-                                            <h3 class="title-d">
-                                                Property Description
-                                            </h3>
+                                            <h3 class="title-d">Property Description</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="property-description">
-                                    <p class="description color-text-a">
-                                        Discover tranquility in the heart of Saibaba Colony. This exquisite villa offers
-                                        a serene escape from the hustle and bustle, while still being conveniently
-                                        located near essential amenities.
-                                    <p class="description color-text-a no-margin">
-                                        Immerse yourself in a peaceful lifestyle, surrounded by lush greenery and a
-                                        friendly neighborhood. </p>
+                                    <p class="description color-text-a">{{ property.description }}</p>
                                 </div>
                                 <div class="row section-t3">
                                     <div class="col-sm-12">
                                         <div class="title-box-d">
-                                            <h3 class="title-d">
-                                                Amenities
-                                            </h3>
+                                            <h3 class="title-d">Amenities</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="amenities-list color-text-a">
                                     <ul class="list-a no-margin">
-                                        <li>Balcony</li>
-                                        <li>Outdoor Kitchen</li>
-                                        <li>Cable Tv</li>
-                                        <li>Deck</li>
-                                        <li>Tennis Courts</li>
-                                        <li>Internet</li>
-                                        <li>Parking</li>
-                                        <li>Sun Room</li>
-                                        <li>Concrete Flooring</li>
+                                        {% if property.amenities %}
+                                        {% for amenity in property.amenities %}
+                                        <li>{{ amenity }}</li>
+                                        {% endfor %}
+                                        {% endif %}
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-md-10 offset-md-1">
                         <ul class="nav nav-pills-a nav-pills mb-3 section-t3" id="pills-tab" role="tablist">
 
@@ -484,19 +516,21 @@
                             </li>
                         </ul>
 
-                        <div class="col-sm-12">
-                            <div class="contact-map box">
-                                <div id="map" class="contact-map">
-                                    <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15664.791633523111!2d76.93491754013638!3d11.023773088136553!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba858e8f255ab59%3A0xfc7f5ba2980c0e3b!2sJawahar%20Nagar%2C%20Saibaba%20Colony%2C%20Coimbatore%2C%20Tamil%20Nadu%20641011!5e0!3m2!1sen!2sin!4v1730085810226!5m2!1sen!2sin"
-                                        width="100%" height="450" frameborder="0" style="border: 0"
-                                        allowfullscreen></iframe>
-                                </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="contact-map box">
+                            <div id="map" class="contact-map">
+                                <iframe src="{{ property.google_map_link }}" width="100%" height="450" frameborder="0"
+                                    style="border: 0" allowfullscreen></iframe>
                             </div>
                         </div>
-
-
                     </div>
+
+
+
+
+                    <!-- Contact Agent Section -->
                     <div class="col-md-12">
                         <div class="row section-t3">
                             <div class="col-sm-12">
@@ -507,32 +541,33 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-lg-4">
-                                <img src="/static/assets/img/agent-4.jpg" alt="" class="img-fluid" />
+                                {% if agent and agent.photo %}
+                                <img src="{{ url_for('static', filename='agents/' + property['agent']['photo'].split('/')[-1]) }}"
+                                    alt="Agent Photo" class="img-fluid agent-photo">
+                                {% else %}
+                                <img src="{{ url_for('static', filename='agents/default-agent-photo.jpg') }}"
+                                    alt="Default Agent Photo" class="img-fluid agent-photo">
+                                {% endif %}
+
                             </div>
                             <div class="col-md-6 col-lg-4">
                                 <div class="property-agent">
-                                    <h4 class="title-agent">
-                                        Arun
-                                    </h4>
-                                    <p class="color-text-a">
-                                        "Diligent, knowledgeable, negotiator, client-focused, resourceful, proactive,
-                                        communicative, trustworthy, experienced, responsive, adaptable, personable,
-                                        detail-oriented, driven."
-                                    </p>
+                                    <h4 class="title-agent">{{ agent.name }}</h4>
+                                    <p class="color-text-a">{{ agent.description }}</p>
                                     <ul class="list-unstyled">
                                         <li class="d-flex justify-content-between">
                                             <strong>Phone:</strong>
-                                            <span class="color-text-a">+91 1234-895-463</span>
+                                            <span class="color-text-a">{{ agent.phone }}</span>
                                         </li>
-
                                         <li class="d-flex justify-content-between">
                                             <strong>Email:</strong>
-                                            <span class="color-text-a">arun@gmail.com</span>
+                                            <span class="color-text-a">{{ agent.email }}</span>
                                         </li>
                                     </ul>
-
                                 </div>
                             </div>
+
+
                             <div class="col-md-12 col-lg-4">
                                 <div class="property-contact">
                                     <form action="http://localhost:3000/send" method="post" role="form"
@@ -585,17 +620,22 @@
                                             </div>
                                         </div>
                                     </form>
+                                    <!-- Add this script right before the closing </body> tag in your HTML -->
+
+
                                 </div>
                             </div>
                         </div>
+
+
+
                     </div>
+
                 </div>
             </div>
         </section>
         <!-- End Property Single-->
     </main>
-    <!-- End #main -->
-
     <!-- ======= Footer ======= -->
     <section class="section-footer">
         <div class="container">
@@ -637,7 +677,7 @@
                                 <ul class="list-unstyled">
                                     <li class="item-list-a">
                                         <i class="bi bi-chevron-right"></i>
-                                        <a href="contact.html">Site Map</a>
+                                        <a href="{{ url_for('contact') }}">Site Map</a>
                                     </li>
 
                                 </ul>
@@ -656,19 +696,19 @@
                             <ul class="list-unstyled">
                                 <li class="item-list-a">
                                     <i class="bi bi-chevron-right"></i>
-                                    <a href="property-grid.html">Apartment Rent</a>
+                                    <a href="{{ url_for('property_grid') }}">Apartment Rent</a>
                                 </li>
                                 <li class="item-list-a">
                                     <i class="bi bi-chevron-right"></i>
-                                    <a href="property-grid.html">House Rent</a>
+                                    <a href="{{ url_for('property_grid') }}">House Rent</a>
                                 </li>
                                 <li class="item-list-a">
                                     <i class="bi bi-chevron-right"></i>
-                                    <a href="property-grid.html">Land Lease</a>
+                                    <a href="{{ url_for('property_grid') }}">Land Lease</a>
                                 </li>
                                 <li class="item-list-a">
                                     <i class="bi bi-chevron-right"></i>
-                                    <a href="property-grid.html">Villa Rent</a>
+                                    <a href="{{ url_for('property_grid') }}">Villa Rent</a>
                                 </li>
                             </ul>
                         </div>
@@ -747,6 +787,7 @@
 
     <!--Main JS File -->
     <script src="/static/assets/js/main.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('.php-email-form');

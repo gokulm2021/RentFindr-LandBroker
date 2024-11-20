@@ -8,9 +8,11 @@ import os
 from dotenv import load_dotenv
 import logging
 from werkzeug.utils import secure_filename
-
+from bson.objectid import ObjectId
+from PIL import Image
+import re
 import os
-
+from uuid import uuid4
 
 
 
@@ -18,6 +20,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif' , 'webp'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 
 # Load environment variables
@@ -36,6 +39,26 @@ UPLOAD_FOLDER = os.path.join(app.static_folder, 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+
+def resize_image(image_path):
+    with Image.open(image_path) as img:
+        target_width = 600  # Example width
+        target_height = 800  # Example height
+        img = img.resize((target_width, target_height), Image.LANCZOS)
+        img.save(image_path)
+
+
+# Function to resize agent photo with specific dimensions
+def resize_agent_photo(image_path):
+    with Image.open(image_path) as img:
+        img = img.convert("RGB")  # Ensure it's in RGB format
+        target_width = 800  # Example width
+        target_height = 896  # Example height
+        img = img.resize((target_width, target_height), Image.Resampling.LANCZOS)
+        img.save(image_path)
+
+
+
 # Flask-Mail configuration for email sending
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
@@ -50,6 +73,7 @@ mail = Mail(app)
 client = MongoClient(os.getenv('MONGODB_URI'))
 db = client['RamDB']  # Database name
 users_collection = db['users'] 
+properties_collection = db.properties
 
 # Load the dataset and preprocess it
 data = pd.read_csv("Districts.csv")
@@ -74,18 +98,35 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
 
+
 @app.route('/')
 def index():
     user_logged_in = 'username' in session  # Check if the user is logged in
     username = session.get('username')  # Get the username from the session
     looking_for = session.get('looking_for')  # Get the 'Looking For' data from the session
-    return render_template('index.html', user_logged_in=user_logged_in, username=username, looking_for=looking_for)
+        
+    # Fetch the latest property
+    latest_property = db['properties'].find().sort('_id', -1).limit(1)
+    latest_property = list(latest_property)  # Convert to list
+    if latest_property:
+        latest_property = latest_property[0]  # Extract the first element
+    else:
+        latest_property = {}
+    
+    # Pass latest_property to the template
+    return render_template('index.html', user_logged_in=user_logged_in, username=username, looking_for=looking_for, latest_property=latest_property)
 
 @app.route('/logout')
 def logout():
-    session.pop('username', None)  # Remove user from session
-    return redirect('/')
-
+    # session.pop('username', None)  # Remove user from session
+    # return redirect('/')
+    # # Clear the session
+    session.pop('role', None)  # Specifically remove 'role' from session
+    session.pop('email', None)  # Remove email as well, if necessary
+    # Print the session to debug
+    print(f"Session after logout: {session}")
+    session.clear()  # This will remove all session data, including the 'role'
+    return redirect(url_for('index'))  # Redirect to the homepage or login page
 
 @app.route('/about.html')
 def about():
@@ -99,7 +140,107 @@ def property():
     user_logged_in = 'username' in session  # Check if the user is logged in
     username = session.get('username')  # Get the username from the session
     looking_for = session.get('looking_for')  # Get the 'Looking For' data from the session
-    return render_template('property-grid.html', user_logged_in=user_logged_in, username=username, looking_for=looking_for)
+    properties = properties_collection.find()  # Fetch all properties from MongoDB
+    tamilnadu_districts = [
+    "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", 
+    "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kancheepuram", 
+    "Karur", "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", 
+    "Namakkal", "Nilgiris", "Perambalur", "Pudukottai", "Ramanathapuram", 
+    "Ranipet", "Salem", "Sivagangai", "Tenkasi", "Thanjavur", "Theni", 
+    "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", 
+    "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", 
+    "Virudhunagar"
+]
+    return render_template('property-grid.html', tamilnadu_districts=tamilnadu_districts, user_logged_in=user_logged_in, username=username, looking_for=looking_for, properties=properties)
+
+
+
+@app.route('/property/<property_id>', endpoint='property_detail')
+def property_detail(property_id):
+    # Retrieve the logged-in user's email from the session
+    user_email = session.get('email')
+    # Retrieve the property from the database
+    property = properties_collection.find_one({'_id': ObjectId(property_id)})
+    user_logged_in = 'username' in session  # Check if the user is logged in
+    username = session.get('username')  # Get the username from the session
+    looking_for = session.get('looking_for')  # Get the 'Looking For' data from the session
+    is_owner = user_email == property.get('seller_email') if property else False
+    # Check if the property exists
+    if not property:
+        return "Property not found", 404
+
+    # Get the agent information if it's part of the property document
+    agent = property.get('agent', {})  # Default to empty dictionary if no agent field exists
+
+    # Render the template, passing both property and agent data
+    return render_template('property-single.html', property=property, agent=agent, user_logged_in=user_logged_in, username=username, looking_for=looking_for, is_owner=is_owner)
+
+
+
+@app.route('/property/<property_id>', methods=['GET'])
+def property_single(property_id):
+    # Retrieve the property from the database
+    property = properties_collection.find_one({'_id': ObjectId(property_id)})
+
+    # Check if the property exists
+    if not property:
+        return "Property not found", 404
+
+    # Ensure agent data is present (use .get to avoid key errors)
+    agent = property.get('agent', {})
+    agent_image = agent.get('photo', '')  # Assuming the agent photo path is stored in 'photo'
+
+    # Get the list of property images
+    property_images = property.get('images', [])
+
+    # Render the template, passing the property and agent data
+    return render_template('property-single.html', property=property, agent=agent, property_images=property_images, agent_image=agent_image)
+
+
+
+
+@app.route('/delete-property/<property_id>', methods=['POST'])
+def delete_property(property_id):
+    # Check if the user is logged in and is a Seller
+    if 'role' not in session or session['role'] != 'Seller':
+        return jsonify({"message": "You are not authorized to delete this property"}), 403  # Return error if unauthorized
+
+    # Ensure the property exists and belongs to the logged-in user
+    property = properties_collection.find_one({"_id": ObjectId(property_id)})
+    if property['seller_email'] != session['email']:
+        return jsonify({"message": "You are not authorized to delete this property"}), 403  # Unauthorized access
+
+    # Delete the property
+    properties_collection.delete_one({"_id": ObjectId(property_id)})
+    return jsonify({"message": "Property deleted successfully"}), 200  # Return success message
+
+
+
+
+
+
+
+@app.route('/property-grid')
+def property_grid():
+    user_logged_in = 'username' in session  # Check if the user is logged in
+    username = session.get('username')  # Get the username from the session
+    looking_for = session.get('looking_for')  # Get the 'Looking For' data from the session
+    # Fetch properties from the database
+    properties = properties_collection.find()
+    
+    # Render the property-grid template with the properties
+    return render_template('property-grid.html', properties=properties,  user_logged_in=user_logged_in, username=username, looking_for=looking_for)
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/contact.html')
 def contact():
@@ -110,69 +251,116 @@ def contact():
 
 @app.route('/dashboard')
 def dashboard():
-    if 'username' not in session:
+    if 'email' not in session:  # Check for unique email in the session
         return redirect('/login')  # Redirect to login if user is not logged in
 
-    username = session.get('username')
-    looking_for = session.get('looking_for')
-    
-    # Retrieve user details from the database
-    user = users_collection.find_one({"fullName": username})
+    email = session.get('email')  # Retrieve the logged-in user's email
+    looking_for = session.get('looking_for')  # Retrieve 'looking_for' from session
+
+    # Retrieve user details from the database using email
+    user = users_collection.find_one({"email": email})
 
     if user is None:
         return jsonify({"message": "User not found"}), 404
-    
-    print(f"Profile Picture: {user.get('profilePicture')}")
 
-    # Pass the user's email and profile picture to the template
-    return render_template('dashboard.html', 
-                           username=username, 
-                           user_email=user.get('email'), 
-                           looking_for=looking_for, 
-                           profile_picture=user.get('profilePicture'))
+    # Pass user details to the template
+    return render_template(
+        'dashboard.html',
+        username=user.get('fullName'),  # Use the full name from the database
+        user_email=user.get('email'),
+        looking_for=looking_for,
+        profile_picture=user.get('profilePicture')  # Pass the profile picture filename
+    )
 
 
 
-@app.route('/update-email', methods=['POST'])
+
+@app.route('/update-email', methods=['Post'])
 def update_email():
-    if 'username' not in session:
+    if 'email' not in session:  # Ensure the email is used as a unique identifier
         return jsonify({"message": "Unauthorized"}), 401
-    
-    data = request.get_json()
-    new_email = data.get("email")
-    
-    # Update the user's email in the database
-    users_collection.update_one({"fullName": session['username']}, {"$set": {"email": new_email}})
-    
-    return jsonify({"message": "Email updated successfully"}), 200
+
+    try:
+        # Get the new email from the request body
+        data = request.get_json()
+        new_email = data.get("email")
+
+        # Validate the new email
+        if not new_email:
+            return jsonify({"message": "New email is required"}), 400
+
+        # Update the user's email in the database
+        result = users_collection.update_one(
+            {"email": session['email']},  # Match the current email in the session
+            {"$set": {"email": new_email}}  # Set the new email
+        )
+
+        # Check if the email was updated
+        if result.modified_count == 0:
+            return jsonify({"message": "No changes made, email may be the same."}), 400
+
+        # Update the session with the new email
+        session['email'] = new_email
+
+        return jsonify({"message": "Email updated successfully"}), 200
+
+    except Exception as e:
+        logging.error(f"Error updating email: {e}")
+        return jsonify({"message": "An error occurred while updating the email"}), 500
 
 
 @app.route('/update-password', methods=['POST'])
 def update_password():
-    if 'username' not in session:
+    # Check if email exists in session
+    if 'email' not in session:
         return jsonify({"message": "Unauthorized"}), 401
+
+    # Log current session user email for debugging
+    print(f"Current session email: {session['email']}")
     
     data = request.get_json()
     new_password = data.get("password")
     
-    # Update the user's password in the database
-    users_collection.update_one({"fullName": session['username']}, {"$set": {"password": new_password}})
+    if not new_password:
+        return jsonify({"message": "Password is required"}), 400
+
+    # Find the user using the email from session
+    user = users_collection.find_one({"email": session['email']})
+    if not user:
+        return jsonify({"message": "User not found"}), 404
     
+    # Update the user's password in the database
+    result = users_collection.update_one({"email": session['email']}, {"$set": {"password": new_password}})
+    
+    if result.matched_count == 0:
+        return jsonify({"message": "User not found"}), 404
+    if result.modified_count == 0:
+        return jsonify({"message": "No changes made"}), 400
+
     return jsonify({"message": "Password updated successfully"}), 200
+
 
 
 @app.route('/delete-account', methods=['DELETE'])
 def delete_account():
-    if 'username' not in session:
+    if 'email' not in session:  # Ensure the email is used as a unique identifier
         return jsonify({"message": "Unauthorized"}), 401
 
-    # Delete the user from the database
-    users_collection.delete_one({"fullName": session['username']})
+    try:
+        # Delete the user from the database based on their unique email
+        result = users_collection.delete_one({"email": session['email']})
 
-    # Clear the session
-    session.clear()
-    
-    return jsonify({"message": "Account deleted successfully"}), 200
+        if result.deleted_count == 0:
+            return jsonify({"message": "Account not found"}), 404
+
+        # Clear the session
+        session.clear()
+
+        return jsonify({"message": "Account deleted successfully"}), 200
+
+    except Exception as e:
+        logging.error(f"Error deleting account: {e}")
+        return jsonify({"message": "An error occurred while deleting the account"}), 500
 
 @app.route('/update-username', methods=['POST'])
 def update_username():
@@ -200,6 +388,146 @@ def update_username():
 
     return jsonify({"message": "Username updated successfully"}), 200
 
+@app.route('/add-property', methods=['GET', 'POST'])
+def add_property():
+    # Check if the user is logged in and has a Seller role
+    if 'role' not in session or session['role'] != 'Seller':
+        return redirect(url_for('login'))  # Redirect to login if not logged in as a Seller
+    
+    if request.method == 'POST':
+        # Collect property data from the form
+        property_name = request.form.get('propertyName')
+        location = request.form.get('location')
+        pincode = request.form.get('pincode')  # Get the pincode from the form
+        price = request.form.get('price')
+        type_of_property = request.form.get('type')
+        description = request.form.get('description')
+        sale_status = request.form.get('sale_status')
+        area = request.form.get('area')
+        beds = request.form.get('beds')
+        baths = request.form.get('baths')
+        yards = request.form.get('yards')
+        
+         # Collect Google Maps embed link
+        google_map_link = request.form.get('googleMapLink')
+
+        # Validate the Google Maps embed link
+        map_link_pattern = r"^https://www\.google\.com/maps/embed\?.+$"
+        if not re.match(map_link_pattern, google_map_link):
+            return jsonify({"error": "Invalid Google Maps Embed Link. Please provide a correct embed URL."}), 400
+
+        # Handle amenities (predefined + custom)
+        amenities = request.form.getlist('amenities')
+        custom_amenities = request.form.get('customAmenities')
+        if custom_amenities:
+            custom_amenities_list = [amenity.strip() for amenity in custom_amenities.split(',')]
+            amenities.extend(custom_amenities_list)
+
+        # Agent information
+        agent_name = request.form.get('agentName')
+        agent_description = request.form.get('agentDescription')
+        agent_phone = request.form.get('agentPhone')
+        agent_email = request.form.get('agentEmail')
+        
+        # Handle agent photo upload
+        agent_photo = None
+        if 'agentPhoto' in request.files:
+            agent_photo_file = request.files['agentPhoto']
+            if agent_photo_file and allowed_file(agent_photo_file.filename):
+                agent_image_folder = 'static/agents'
+                if not os.path.exists(agent_image_folder):
+                    os.makedirs(agent_image_folder)
+                
+                agent_photo_filename = secure_filename(agent_photo_file.filename)
+                agent_photo_path = os.path.join(agent_image_folder, agent_photo_filename)
+                agent_photo_file.save(agent_photo_path)
+                resize_agent_photo(agent_photo_path)  # Resize specifically for agent photos
+                agent_photo = f"/static/agents/{agent_photo_filename}"
+
+        # Seller email from session
+        seller_email = session.get('email')
+        if not seller_email:
+            return jsonify({"message": "You need to be logged in as a Seller to add a property"}), 403
+
+        # Handle property images upload
+        images = []
+        if 'images' in request.files:
+            image_folder = 'static/images'
+            if not os.path.exists(image_folder):
+                os.makedirs(image_folder)
+
+
+            for image in request.files.getlist('images'):
+                if image and allowed_file(image.filename):
+                    filename = secure_filename(image.filename)
+                    image_path = os.path.join(image_folder, filename)
+                    image.save(image_path)
+                    resize_image(image_path)
+                    images.append(f"/static/images/{filename}")
+
+        # Create the property dictionary to save in the database
+        new_property = {
+            'name': property_name,
+            'location': location,
+            'pincode': pincode,  # Save the pincode
+            'google_map_link': google_map_link,  # Save the Google Maps embed link
+            'price': price,
+            'type': type_of_property,
+            'sale_status': sale_status,
+            'description': description,
+            'area': area,
+            'beds': beds,
+            'baths': baths,
+            'yards': yards,
+            'images': images,
+            "seller_email": session['email'],  # set the logged-in user's email as seller_email
+            'agent': {
+                'name': agent_name,
+                'description': agent_description,
+                'phone': agent_phone,
+                'email': agent_email,
+                'photo': agent_photo
+            },
+            'amenities': amenities
+        }
+
+        # Insert the new property into MongoDB
+        properties_collection = db["properties"]
+        properties_collection.insert_one(new_property)
+        
+        # Redirect after successful insertion
+        return redirect(url_for('property_grid'))
+
+    return render_template('add-property.html')
+
+
+
+
+
+
+# @app.route('/upload_property_image', methods=['POST'])
+# def upload_property_image():
+#     if 'image' not in request.files:
+#         return "No file part"
+#     file = request.files['image']
+#     if file.filename == '':
+#         return "No selected file"
+#     if file:
+#         # Save the uploaded file
+#         filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+#         file.save(filepath)
+
+#         # Process the image
+#         is_intro_slide = request.form.get('is_intro_slide', 'false').lower() == 'true'
+#         process_image(filepath, is_intro_slide=is_intro_slide)
+
+#         # Return response or save the image details in the database
+#         return "Image processed and saved."
+
+
+
+
+
 
 
 @app.route('/login.html')
@@ -210,9 +538,11 @@ def login():
 def signup():
     return render_template('signup.html')
 
-
-
-
+# Route to display properties
+@app.route('/properties')
+def properties():
+    all_properties = properties_collection.find()
+    return render_template('properties.html', properties=all_properties)
 
 @app.route('/property-single1.html')
 def property_single1():
@@ -328,7 +658,8 @@ def send_email():
     except Exception as e:
         print('Error sending email:', e)
         return jsonify({'message': 'Error sending email'}), 500
-    
+ 
+ 
 @app.route('/signup', methods=['POST'])
 def signup_user():
     data = request.form  # Correctly accessing form data
@@ -341,9 +672,9 @@ def signup_user():
     password = data.get("password")
     confirm_password = data.get("confirmPassword")
     looking_for = data.get("lookingFor")  # Collect looking for option
-    profile_picture = request.files.get("profilePicture")
+    role = data.get("role")  # Collect role option
 
-    logging.debug(f"Full Name: {full_name}, Email: {email}, Looking For: {looking_for}, Profile Picture: {profile_picture}")
+    logging.debug(f"Full Name: {full_name}, Email: {email}, Looking For: {looking_for}, Role: {role}")
 
     # Additional checks
     if not email:
@@ -352,11 +683,16 @@ def signup_user():
     if password != confirm_password:
         return jsonify({"message": "Passwords do not match"}), 400
 
+    if role not in ["Seller", "User"]:
+        return jsonify({"message": "Invalid role selected"}), 400
+
+    # Save the profile picture with a unique filename
     if profile_picture and allowed_file(profile_picture.filename):
-        filename = secure_filename(profile_picture.filename)
-        profile_picture.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        original_filename = secure_filename(profile_picture.filename)
+        unique_filename = f"{uuid4().hex}_{original_filename}"  # Generate a unique filename
+        profile_picture.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
     else:
-        filename = None  # Handle the case when the profile picture is not provided
+        unique_filename = None  # Handle the case when the profile picture is not provided
 
     try:
         # Insert new user data into the 'users' collection
@@ -367,20 +703,29 @@ def signup_user():
         if existing_user:
             return jsonify({"message": "Email already registered"}), 400
 
+        # Create a new user document
         new_user = {
             "fullName": full_name,
             "email": email,
             "password": password,
             "lookingFor": looking_for,
-            "profilePicture": filename  # Store filename or path in your database
+            "role": role,
+            "profilePicture": unique_filename  # Store the unique filename in your database
         }
 
+        # Insert user into the database and get their unique `_id`
+        result = users_collection.insert_one(new_user)
+        user_id = str(result.inserted_id)  # MongoDB-generated unique user ID
+
         logging.debug(f"New User: {new_user}")  # Log the new user details
-        users_collection.insert_one(new_user)
 
         # Save the user's info in the session
-        session['username'] = full_name
+        session.clear()  # Clear any existing session data
+        session['user_id'] = user_id  # Use the unique user ID for session tracking
+        session['email'] = email  # Use email as a secondary identifier
+        session['role'] = role  # Save the role in the session
         session['looking_for'] = looking_for
+        session['username'] = full_name  # Optionally save the full name
 
         return jsonify({"message": "User registered successfully"}), 201
     except Exception as error:
@@ -390,7 +735,6 @@ def signup_user():
 
 
 
-# Login route
 @app.route('/login', methods=['POST'])
 def login_user():
     data = request.get_json()
@@ -400,7 +744,7 @@ def login_user():
     try:
         users_collection = db["users"]
         user = users_collection.find_one({"email": email})
-
+        
         if not user:
             return jsonify({"message": "User not found"}), 404
 
@@ -408,13 +752,16 @@ def login_user():
             return jsonify({"message": "Incorrect password"}), 401
 
         # Set session after successful login
-        session['username'] = user.get('fullName')  # or user.get('email'), depending on your preference
-
+        session['username'] = user.get('fullName')  # Store the user's full name in the session
+        session['email'] = user.get('email')  # Store the user's email in the session
+        session['role'] = user.get('role')  # Store the user's role in the session (Seller/Buyer)
+    
         # Send a success response
         return jsonify({"message": "Login successful"}), 200
     except Exception as error:
         logging.error("Error logging in: %s", error)
         return jsonify({"message": "Error logging in"}), 500
+
 
 
 if __name__ == '__main__':

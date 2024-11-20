@@ -1,70 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Bootstrap CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/static/assets/css/styl.css"> <!-- Custom CSS -->
     <link href="/static/assets/img/logo.png" rel="icon" />
     <link href="/static/assets/img/logo.png" rel="apple-touch-icon" />
     <style>
         body {
-            background: url('/static/assets/img/5072616.jpg') no-repeat center center fixed;
+            background: url('/static/assets/img/post-single-2.jpg') no-repeat center center fixed;
             background-size: cover;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Roboto', sans-serif;
-            color: #f5f5f5; /* Light text color for contrast */
+            color: #f5f5f5;
+            /* Light text color for contrast */
         }
-    
+
         .container {
             max-width: 400px;
             width: 90%;
-            background-color: rgba(15, 15, 35, 0.85); /* Darker background with increased opacity */
+            background-color: rgba(15, 15, 35, 0.85);
+            /* Darker background with increased opacity */
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); /* Slightly stronger shadow for depth */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            /* Slightly stronger shadow for depth */
             transition: transform 0.3s, box-shadow 0.3s;
-            backdrop-filter: blur(15px); /* Enhanced blur effect for frosted glass look */
+            backdrop-filter: blur(15px);
+            /* Enhanced blur effect for frosted glass look */
         }
-    
+
         .container:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); /* Stronger shadow on hover */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            /* Stronger shadow on hover */
         }
-    
+
         h2 {
             text-align: center;
             margin-bottom: 1.5rem;
-            color: #70c1ff; /* Light blue to match the image */
+            color: #70c1ff;
+            /* Light blue to match the image */
             font-weight: 700;
             font-size: 1.8rem;
         }
-    
+
         .form-container input,
         .form-container select {
             width: 100%;
             padding: 12px;
             margin: 8px 0;
-            border: 1px solid #3a3d4a; /* Darker border color */
+            border: 1px solid #3a3d4a;
+            /* Darker border color */
             border-radius: 5px;
             box-sizing: border-box;
             font-size: 16px;
-            background-color: rgba(27, 30, 47, 0.8); /* Dark transparent background for inputs */
-            color: #f5f5f5; /* Light text for inputs */
+            background-color: rgba(27, 30, 47, 0.8);
+            /* Dark transparent background for inputs */
+            color: #f5f5f5;
+            /* Light text for inputs */
             transition: border-color 0.3s;
         }
-    
+
         .form-container input:focus {
             border-color: #70c1ff;
             box-shadow: 0 0 5px rgba(112, 193, 255, 0.5);
         }
-    
+
         .signup-btn {
             width: 100%;
             padding: 10px;
@@ -77,30 +90,32 @@
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
         }
-    
+
         .signup-btn:hover {
-            background-color: #0073e6; /* Darker blue on hover */
+            background-color: #0073e6;
+            /* Darker blue on hover */
             transform: scale(1.05);
         }
-    
+
         p {
             text-align: center;
             margin-top: 1rem;
-            color: #c0c4d6; /* Light gray for text */
+            color: #c0c4d6;
+            /* Light gray for text */
         }
-    
+
         .login-link {
             color: #70c1ff;
             font-weight: 500;
             text-decoration: none;
             transition: color 0.3s;
         }
-    
+
         .login-link:hover {
             text-decoration: underline;
             color: #0073e6;
         }
-    
+
         #message-container {
             margin-top: 10px;
             text-align: center;
@@ -110,100 +125,272 @@
             border-radius: 5px;
             display: none;
         }
-    
+
         .message-success {
-            background-color: #3a7c4e; /* Dark green for success */
-            color: #e0ffe0; /* Light green text */
+            background-color: #3a7c4e;
+            /* Dark green for success */
+            color: #e0ffe0;
+            /* Light green text */
         }
-    
+
         .message-error {
-            background-color: #7c3a3a; /* Dark red for error */
-            color: #ffe0e0; /* Light red text */
+            background-color: #7c3a3a;
+            /* Dark red for error */
+            color: #ffe0e0;
+            /* Light red text */
         }
-    
+
         /* Media Queries for Responsiveness */
         @media (max-width: 600px) {
             .container {
                 padding: 1.5rem;
             }
+
             h2 {
                 font-size: 1.5rem;
             }
+
             .form-container input,
             .form-container select {
                 font-size: 14px;
             }
+
             .signup-btn {
                 font-size: 1rem;
             }
+
             p {
                 font-size: 0.9rem;
             }
+
             #message-container {
                 font-size: 0.8rem;
             }
         }
-    </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="form-container">
-                <h2><i class="fas fa-user-plus"></i> Signup</h2>
-                <form id="signup-form" enctype="multipart/form-data" method="POST" action="/signup">
-                    <input type="text" name="fullName" placeholder="Full Name" required>
-                    <input type="email" name="email" placeholder="Email" required>
-                    <input type="password" name="password" placeholder="Password" required>
-                    <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
-                    
-                    <div class="dropdown-style">
-                        <select name="lookingFor" id="lookingFor" required>
-                            <option value="" disabled selected>Looking for...</option>
-                            <option value="Apartment">Apartment</option>
-                            <option value="House">House</option>
-                            <option value="Villa">Villa</option>
-                        </select>
-                    </div>
-                
-                    <input type="file" name="profilePicture" > <!-- Make sure this input is included -->
-                    <p>Uploading Image is Not Mandatory!</p>
-                    <button type="submit" class="signup-btn">Sign Up</button>
-                    <p>Already have an account? <a href="./login.html" class="login-link">Login</a></p>
-                    
-                    <div id="message-container"></div>
-                </form>
-            </div>                
-        </div>
-    
 
-        <script>
-            document.getElementById('signup-form').addEventListener('submit', async function(event) {
-                event.preventDefault(); // Prevent default form submission
-        
-                const formData = new FormData(this); // Collect all form data, including files
-        
-                try {
-                    const response = await fetch('/signup', {
-                        method: 'POST',
-                        body: formData // Send formData directly
-                    });
-        
-                    const result = await response.json();
-                    const messageContainer = document.getElementById('message-container');
-                    messageContainer.textContent = result.message;
-        
-                    if (response.ok) {
-                        messageContainer.className = 'message-success'; // Add success class
-                        messageContainer.style.display = 'block'; // Show the message
-                        setTimeout(() => window.location.href = '/login.html', 1500);
-                    } else {
-                        messageContainer.className = 'message-error'; // Add error class
-                        messageContainer.style.display = 'block'; // Show the message
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
+
+        .password-hint {
+            font-size: 1px margin-top: 1px;
+            display: block;
+        }
+
+
+        .password-container {
+            position: relative;
+        }
+
+        #password {
+            width: 100%;
+            padding-right: 40px;
+            /* Ensure enough space on the right for the eye icon */
+        }
+
+        #toggle-password {
+            position: absolute;
+            right: 20px;
+            top: 30%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 15px;
+            /* Adjust the icon size as needed */
+        }
+
+        .password-hint {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2><i class="fas fa-user-plus"></i> Signup</h2>
+            <form id="signup-form" enctype="multipart/form-data" method="POST" action="/signup">
+                <input type="text" name="fullName" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+
+                <div class="password-container">
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <i id="toggle-password" class="fas fa-eye"></i> <!-- Eye icon for showing/hiding password -->
+                    <small id="password-message" class="password-hint">
+                        Password must be at least 6 characters long, include at least one uppercase letter, and one
+                        special character.
+                    </small>
+                </div>
+
+                <div class="confirm-password-container">
+                    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password"
+                        required>
+                    <small id="confirm-password-message" class="password-hint"></small>
+                </div>
+
+                <!-- Role Dropdown -->
+                <div class="dropdown-style">
+                    <select name="role" id="role" required>
+                        <option value="" disabled selected>Select Role</option>
+                        <option value="Seller">Seller</option>
+                        <option value="User">User</option>
+                    </select>
+                </div>
+
+                <div class="dropdown-style" id="looking-for-container" style="display: none;">
+                    <select name="lookingFor" id="lookingFor">
+                        <option value="" disabled selected>Looking for...</option>
+                        <option value="Apartment">Apartment</option>
+                        <option value="House">House</option>
+                        <option value="Villa">Villa</option>
+                    </select>
+                </div>
+
+                <input type="file" name="profilePicture">
+                <p>Uploading Image is Not Mandatory!</p>
+
+                <button type="submit" class="signup-btn">Sign Up</button>
+                <p>Already have an account? <a href="./login.html" class="login-link">Login</a></p>
+
+                <div id="message-container"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Add event listener to toggle "Looking For" dropdown visibility based on selected role
+        document.getElementById('role').addEventListener('change', function () {
+            const lookingForContainer = document.getElementById('looking-for-container');
+            const lookingForDropdown = document.getElementById('lookingFor');
+
+            if (this.value === 'User') {
+                lookingForContainer.style.display = 'block'; // Show the dropdown
+                lookingForDropdown.setAttribute('required', 'required'); // Make it required
+            } else {
+                lookingForContainer.style.display = 'none'; // Hide the dropdown
+                lookingForDropdown.removeAttribute('required'); // Remove required
+            }
+        });
+
+        // Password visibility toggle function
+        const togglePasswordIcon = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+
+        togglePasswordIcon.addEventListener('click', function () {
+            // Toggle password visibility
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                togglePasswordIcon.classList.remove('fa-eye');
+                togglePasswordIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                togglePasswordIcon.classList.remove('fa-eye-slash');
+                togglePasswordIcon.classList.add('fa-eye');
+            }
+        });
+
+        // Password validation and dynamic message display
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordMessage = document.getElementById('password-message');
+        const confirmPasswordMessage = document.getElementById('confirm-password-message');
+
+        passwordInput.addEventListener('input', function () {
+            const password = passwordInput.value;
+            const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+            const uppercaseRegex = /[A-Z]/;
+
+            let message = 'Password must be at least 6 characters long';
+            let valid = true;
+
+            if (password.length < 6) {
+                message += ', ';
+                valid = false;
+            }
+            if (!uppercaseRegex.test(password)) {
+                message += 'include at least one uppercase letter, ';
+                valid = false;
+            }
+            if (!specialCharRegex.test(password)) {
+                message += 'and one special character.';
+                valid = false;
+            }
+
+            // Update message content and style
+            passwordMessage.textContent = valid ? 'Password looks good!' : message;
+            passwordMessage.style.color = valid ? 'green' : 'red';
+
+            // Recheck confirm password validity when the main password changes
+            checkPasswordMatch();
+        });
+
+        confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+
+        function checkPasswordMatch() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            if (!confirmPassword) {
+                // Clear the message when confirmPassword is empty
+                confirmPasswordMessage.textContent = '';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                confirmPasswordMessage.textContent = 'Passwords do not match.';
+                confirmPasswordMessage.style.color = 'red';
+            } else {
+                confirmPasswordMessage.textContent = 'Passwords match!';
+                confirmPasswordMessage.style.color = 'green';
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('signup-form').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            // Final password validation
+            const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+            const uppercaseRegex = /[A-Z]/;
+            if (password.length < 6 || !specialCharRegex.test(password) || !uppercaseRegex.test(password)) {
+                alert('Password does not meet the requirements.');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+
+            const formData = new FormData(this); // Collect all form data, including files
+
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    body: formData // Send formData directly
+                });
+
+                const result = await response.json();
+                const messageContainer = document.getElementById('message-container');
+                messageContainer.textContent = result.message;
+
+                if (response.ok) {
+                    messageContainer.className = 'message-success'; // Add success class
+                    messageContainer.style.display = 'block'; // Show the message
+                    setTimeout(() => window.location.href = '/login.html', 1500);
+                } else {
+                    messageContainer.className = 'message-error'; // Add error class
+                    messageContainer.style.display = 'block'; // Show the message
                 }
-            });
-        </script>
-        
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+    </script>
+
+
 </body>
+
 </html>

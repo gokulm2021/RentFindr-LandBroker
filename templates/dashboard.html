@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,30 +8,57 @@
     <link href="../static/assets/css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="static/assets/img/logo.png" rel="icon" />
-        <link href="static/assets/img/logo.png" rel="apple-touch-icon" />
+    <link href="static/assets/img/logo.png" rel="apple-touch-icon" />
 </head>
+<style>
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
+
+    .message-success {
+        color: green;
+        font-size: 1rem;
+    }
+
+    .message-error {
+        color: red;
+        font-size: 1rem;
+    }
+
+    .password-hint {
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: block;
+    }
+</style>
+
 <body>
     <div class="dashboard-box">
-        
+
         <div class="dashboard-content">
             <!-- Welcome Section -->
-            
+
             <section id="home" class="section welcome">
                 <h1>Welcome, {{ username }}!</h1>
                 <div class="profile-image-container">
-                    <img src="{{ url_for('static', filename='uploads/' + (profile_picture if profile_picture else 'default.jpg')) }}" alt="User Profile Picture" id="profileImage">
+                    <img src="{{ url_for('static', filename='uploads/' + (profile_picture if profile_picture else 'default.jpg')) }}"
+                        alt="User Profile Picture" id="profileImage">
                     <button class="back-button" onclick="window.history.back();">
                         <i class="fas fa-arrow-left back-icon"></i> Back
                     </button>
                 </div>
             </section>
-            
+
             <!-- Profile Section -->
             <section id="profile" class="section profile">
                 <h2>Your Profile</h2>
                 <p>Name: {{ username }}</p>
                 <p>Email: {{ user_email }}</p>
+                {% if looking_for %}
                 <p>Looking for: {{ looking_for }}</p>
+                {% endif %}
+
 
                 <form id="edit-username-form" class="settings-form" onsubmit="return updateUsername(event)">
                     <h3>Edit Username:</h3>
@@ -38,24 +66,29 @@
                     <button type="submit">Update Username</button>
                 </form>
             </section>
-    
+
             <section id="settings" class="section settings">
                 <h2>Settings</h2>
                 <div id="message-container" class="message-container"></div>
-    
+
                 <form id="update-email-form" class="settings-form">
                     <h3>Update Email</h3>
                     <input type="email" id="newEmail" placeholder="New Email" required>
                     <button type="submit">Update Email</button>
                 </form>
-    
+
                 <form id="update-password-form" class="settings-form">
                     <h3>Update Password</h3>
                     <input type="password" id="newPassword" placeholder="New Password" required>
+                    <small id="new-password-message" class="password-hint">
+                        Password must be at least 6 characters long, include at least one uppercase letter, and one
+                        special character.
+                    </small>
                     <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" required>
+                    <small id="confirm-new-password-message" class="password-hint"></small>
                     <button type="submit">Update Password</button>
                 </form>
-    
+
                 <button id="delete-account-button">Delete Account</button>
                 <button class="logout-button"><a href="{{ url_for('logout') }}">Logout</a></button>
             </section>
@@ -71,197 +104,254 @@
                 <button id="cancel-delete-button">Cancel</button>
             </div>
         </div>
-    </div>    
-    
+    </div>
+
     <script>
         function showMessage(type, message) {
-    const messageContainer = document.getElementById('message-container');
-    
-   
-    
-    // Determine the icon and apply the style based on message type
-    let iconHTML = '';
-    if (type === 'success') {
-        messageContainer.classList.add('message-success');
-        iconHTML = '<span style="margin-right: 10px;">&#x2714;</span>'; // Checkmark icon for success
-    } else if (type === 'error') {
-        messageContainer.classList.add('message-error');
-        iconHTML = '<span style="margin-right: 10px;">&#x26A0;</span>'; // Warning icon for error
-    }
-    
-    // Set message content with icon and display the container
-    messageContainer.innerHTML =  message;
-    messageContainer.style.display = 'block';
-    messageContainer.style.opacity = '1';
-    messageContainer.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-    messageContainer.style.transform = 'translateY(0)';
+            const messageContainer = document.getElementById('message-container');
 
-    // Hide the message after 3 seconds with fade-out effect
-    setTimeout(() => {
-        messageContainer.style.opacity = '0';
-        messageContainer.style.transform = 'translateY(-10px)';
-        setTimeout(() => {
-            messageContainer.style.display = 'none';
-        }, 300); // Wait for fade-out transition to complete before hiding
-    }, 3000);
-}
+            // Determine the icon and apply the style based on message type
+            let iconHTML = '';
+            if (type === 'success') {
+                messageContainer.classList.add('message-success');
+                iconHTML = '<span style="margin-right: 10px;">&#x2714;</span>'; // Checkmark icon for success
+            } else if (type === 'error') {
+                messageContainer.classList.add('message-error');
+                iconHTML = '<span style="margin-right: 10px;">&#x26A0;</span>'; // Warning icon for error
+            }
 
+            // Set message content with icon and display the container
+            messageContainer.innerHTML = message;
+            messageContainer.style.display = 'block';
+            messageContainer.style.opacity = '1';
+            messageContainer.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            messageContainer.style.transform = 'translateY(0)';
 
-// Update Username
-document.getElementById('edit-username-form').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    const newUsername = document.getElementById('newUsername').value;
-
-    try {
-        const response = await fetch('/update-username', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' // Ensure JSON content type
-            },
-            body: JSON.stringify({ username: newUsername })
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-            showMessage('success', result.message); // Pass type as 'success'
+            // Hide the message after 3 seconds with fade-out effect
             setTimeout(() => {
-                window.location.reload(); // Reload the page
-            }, 1000); // Optional: delay for 1 second before reloading
-        } else {
-            showMessage('error', result.message); // Pass type as 'error'
+                messageContainer.style.opacity = '0';
+                messageContainer.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    messageContainer.style.display = 'none';
+                }, 300); // Wait for fade-out transition to complete before hiding
+            }, 3000);
         }
-    } catch (error) {
-        console.error('Error:', error);
-        showMessage('error', "An error occurred while updating username."); // Show error message
-    }
-
-});
 
 
 
-// Update Email
-document.getElementById('update-email-form').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent default form submission
+        // Update Username
+        document.getElementById('edit-username-form').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent default form submission
 
-    const newEmail = document.getElementById('newEmail').value;
+            const newUsername = document.getElementById('newUsername').value;
 
-    try {
-    const response = await fetch('/update-email', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json' // Ensure JSON content type
-        },
-        body: JSON.stringify({ email: newEmail })
-    });
+            try {
+                const response = await fetch('/update-username', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json' // Ensure JSON content type
+                    },
+                    body: JSON.stringify({ username: newUsername })
+                });
 
-    const result = await response.json();
-    if (response.ok) {
-        showMessage('success', result.message); // Pass type as 'success'
-        setTimeout(() => {
-                window.location.reload(); // Reload the page
-            }, 1000); // Optional: delay for 1 second before reloading
-    } else {
-        showMessage('error', result.message); // Pass type as 'error'
-    }
-} catch (error) {
-    console.error('Error:', error);
-    showMessage('error', "An error occurred while updating email."); // Show error message
-}
+                const result = await response.json();
+                if (response.ok) {
+                    showMessage('success', result.message); // Pass type as 'success'
+                    setTimeout(() => {
+                        window.location.reload(); // Reload the page
+                    }, 1000); // Optional: delay for 1 second before reloading
+                } else {
+                    showMessage('error', result.message); // Pass type as 'error'
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('error', "An error occurred while updating username."); // Show error message
+            }
 
-});
+        });
+        // Update Email
+        document.getElementById('update-email-form').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent default form submission
 
-// Update Password
-document.getElementById('update-password-form').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent default form submission
+            const newEmail = document.getElementById('newEmail').value;
 
-    const newPassword = document.getElementById('newPassword').value;
-    const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+            try {
+                const response = await fetch('/update-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json' // Ensure JSON content type
+                    },
+                    body: JSON.stringify({ email: newEmail })
+                });
 
-    if (newPassword !== confirmNewPassword) {
-        showMessage("Passwords do not match!", false); // Show error message
-        return;
-    }
+                const result = await response.json();
+                if (response.ok) {
+                    showMessage('success', result.message); // Pass type as 'success'
+                    setTimeout(() => {
+                        window.location.reload(); // Reload the page
+                    }, 1000); // Optional: delay for 1 second before reloading
+                } else {
+                    showMessage('error', result.message); // Pass type as 'error'
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('error', "An error occurred while updating email."); // Show error message
+            }
 
-    try {
-    const response = await fetch('/update-password', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json' // Ensure JSON content type
-        },
-        body: JSON.stringify({ password: newPassword })
-    });
-
-    const result = await response.json();
-    if (response.ok) {
-        showMessage('success', result.message); // Pass type as 'success'
-        window.location.href = '/login.html'; // Redirect to login after deletion
-    } else {
-        showMessage('error', result.message); // Pass type as 'error'
-    }
-} catch (error) {
-    console.error('Error:', error);
-    showMessage('error', "An error occurred while updating password."); // Show error message
-}
-
-});
-
-// Delete Account
-
-// Get modal elements
-const deleteAccountModal = document.getElementById('delete-account-modal');
-const closeButton = document.querySelector('.close-button');
-const cancelDeleteButton = document.getElementById('cancel-delete-button');
-const confirmDeleteButton = document.getElementById('confirm-delete-button');
-
-// Delete Account
-document.getElementById('delete-account-button').addEventListener('click', function() {
-    // Show the modal
-    deleteAccountModal.style.display = 'block';
-});
-
-// Close the modal
-closeButton.onclick = function() {
-    deleteAccountModal.style.display = 'none';
-}
-
-cancelDeleteButton.onclick = function() {
-    deleteAccountModal.style.display = 'none';
-}
-
-// Confirm deletion
-confirmDeleteButton.addEventListener('click', async function() {
-    try {
-        const response = await fetch('/delete-account', {
-            method: 'DELETE'
         });
 
-        const result = await response.json();
-        if (response.ok) {
-            showMessage('success', result.message); // Pass type as 'success'
-            window.location.href = '/login.html'; // Redirect to login after deletion
-        } else {
-            showMessage('error', result.message); // Pass type as 'error'
+        document.getElementById('update-password-form').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+            // Check if passwords match
+            if (newPassword !== confirmNewPassword) {
+                showMessage("Passwords do not match!", false); // Show error message
+                return;
+            }
+
+            try {
+                const response = await fetch('/update-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Set content type to JSON
+                    },
+                    body: JSON.stringify({ password: newPassword }),  // Send password in JSON
+                });
+
+                const result = await response.json();
+                showMessage(result.message, response.ok); // Show success or error message
+
+                if (response.ok) {
+                    // Redirect to login or another page after success
+                    setTimeout(() => window.location.href = '/login.html', 1500);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage("An error occurred while updating the password.", false);
+            }
+        });
+
+        function showMessage(message, isSuccess) {
+            const messageContainer = document.getElementById('message-container');
+            messageContainer.textContent = message;
+            messageContainer.style.display = 'block';
+            messageContainer.style.color = isSuccess ? 'green' : 'red';  // Green for success, red for error
         }
-    } catch (error) {
-        console.error('Error:', error);
-        showMessage('error', "An error occurred while deleting account."); // Show error message
-    } finally {
-        deleteAccountModal.style.display = 'none'; // Hide the modal
-    }
-});
+
+        // Real-time validation for new password and confirm password fields
+        document.getElementById('newPassword').addEventListener('input', function () {
+            const newPassword = this.value;
+            const passwordMessage = document.getElementById('new-password-message');
+            const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+            const uppercaseRegex = /[A-Z]/;
+
+            let message = 'Password must be at least 6 characters long';
+            let valid = true;
+
+            if (newPassword.length < 6) {
+                message += ', ';
+                valid = false;
+            }
+            if (!uppercaseRegex.test(newPassword)) {
+                message += 'include at least one uppercase letter, ';
+                valid = false;
+            }
+            if (!specialCharRegex.test(newPassword)) {
+                message += 'and one special character.';
+                valid = false;
+            }
+
+            // Update message content and style
+            passwordMessage.textContent = valid ? 'Password looks good!' : message;
+            passwordMessage.style.color = valid ? 'green' : 'red';
+
+            // Recheck confirm password validity when the new password changes
+            checkPasswordMatch();
+        });
+
+        document.getElementById('confirmNewPassword').addEventListener('input', checkPasswordMatch);
+
+        function checkPasswordMatch() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+            const confirmPasswordMessage = document.getElementById('confirm-new-password-message');
+
+            if (!confirmNewPassword) {
+                // Clear the message when confirmNewPassword is empty
+                confirmPasswordMessage.textContent = '';
+                return;
+            }
+
+            if (newPassword !== confirmNewPassword) {
+                confirmPasswordMessage.textContent = 'Passwords do not match.';
+                confirmPasswordMessage.style.color = 'red';
+            } else {
+                confirmPasswordMessage.textContent = 'Passwords match!';
+                confirmPasswordMessage.style.color = 'green';
+            }
+        }
+
+        // Delete Account
+
+        // Get modal elements
+        const deleteAccountModal = document.getElementById('delete-account-modal');
+        const closeButton = document.querySelector('.close-button');
+        const cancelDeleteButton = document.getElementById('cancel-delete-button');
+        const confirmDeleteButton = document.getElementById('confirm-delete-button');
+
+        // Delete Account
+        document.getElementById('delete-account-button').addEventListener('click', function () {
+            // Show the modal
+            deleteAccountModal.style.display = 'block';
+        });
+
+        // Close the modal
+        closeButton.onclick = function () {
+            deleteAccountModal.style.display = 'none';
+        }
+
+        cancelDeleteButton.onclick = function () {
+            deleteAccountModal.style.display = 'none';
+        }
+
+        // Confirm deletion
+        confirmDeleteButton.addEventListener('click', async function () {
+            try {
+                const response = await fetch('/delete-account', {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    showMessage('success', result.message); // Pass type as 'success'
+                    window.location.href = '/login.html'; // Redirect to login after deletion
+                } else {
+                    showMessage('error', result.message); // Pass type as 'error'
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('error', "An error occurred while deleting account."); // Show error message
+            } finally {
+                deleteAccountModal.style.display = 'none'; // Hide the modal
+            }
+        });
 
 
-// Close the modal when clicking outside of it
-window.onclick = function(event) {
-    if (event.target === deleteAccountModal) {
-        deleteAccountModal.style.display = 'none';
-    }
-}
+        // Close the modal when clicking outside of it
+        window.onclick = function (event) {
+            if (event.target === deleteAccountModal) {
+                deleteAccountModal.style.display = 'none';
+            }
+        }
 
 
     </script>
-    
-    
+
+
 </body>
+
 </html>

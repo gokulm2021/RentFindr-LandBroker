@@ -1,698 +1,572 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-        <title>Property Single</title>
-        <meta content="" name="description" />
-        <meta content="" name="keywords" />
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-        <!-- Favicons -->
-        <link href="/static/assets/img/logo.png" rel="icon" />
-        <link href="/static/assets/img/logo.png" rel="apple-touch-icon" />
+    <title>Property Single</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
 
-        <!-- Google Fonts -->
-        <link
-            href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"
-            rel="stylesheet"
-        />
+    <!-- Favicons -->
+    <link href="/static/assets/img/logo.png" rel="icon" />
+    <link href="/static/assets/img/logo.png" rel="apple-touch-icon" />
 
-        <!-- Vendor CSS Files -->
-        <link
-            href="/static/assets/vendor/animate.css/animate.min.css"
-            rel="stylesheet"
-        />
-        <link
-            href="/static/assets/vendor/bootstrap/css/bootstrap.min.css"
-            rel="stylesheet"
-        />
-        <link
-            href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css"
-            rel="stylesheet"
-        />
-        <link
-            href="/static/assets/vendor/swiper/swiper-bundle.min.css"
-            rel="stylesheet"
-        />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" />
 
-        <!-- Main CSS File -->
-        <link href="/static/assets/css/style.css" rel="stylesheet" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Vendor CSS Files -->
+    <link href="/static/assets/vendor/animate.css/animate.min.css" rel="stylesheet" />
+    <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <!-- Main CSS File -->
+    <link href="/static/assets/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
-                       <!-- Include Font Awesome for icons in your <head> section -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    </head>
+    <!-- Include Font Awesome for icons in your <head> section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
 
-    <body>
-       <!-- ******* Property Search div ******* -->
-       <div class="click-closed"></div>
-       <!--/ Form Search Star /-->
-<div class="box-collapse" style="background-color: white">
-    <div class="title-box-d">
-        <h3 class="title-d">Predict SquareFeet Price</h3>
-    </div>
-    <span class="close-box-collapse right-boxed bi bi-x"></span>
-    <div class="box-collapse-wrap form">
-        <form class="form-a" id="price-form" method="POST" action="/predict">
-            <div class="row">
-                <div class="col-md-12 mb-2">
-                    <div class="form-group">
-                        <label class="pb-2" for="Sqft">Enter Sqft</label>
-                        <input
-                            type="text"
-                            class="form-control form-control-lg form-control-a"
-                            placeholder="Sqft"
-                            id="Sqft"
-                            name="sqft"
-                            required
-                        />
-                    </div>
-                </div>
-                <div class="col-md-6 mb-2">
-                    <div class="form-group mt-3">
-                        <label class="pb-2" for="District">District</label>
-                        <select
-                            class="form-control form-select form-control-a"
-                            id="District"
-                            name="district"
-                            onchange="updateAddresss()"
-                            required
-                        >
-                            <option value="">--Select District--</option>
-                            <option>Ariyalur</option>
-                            <option>Chengalpattu</option>
-                            <option>Chennai</option>
-                            <option>Coimbatore</option>
-                            <option>Cuddalore</option>
-                            <option>Dharmapuri</option>
-                            <option>Dindigul</option>
-                            <option>Erode</option>
-                            <option>Kallakurichi</option>
-                            <option>Kanchipuram</option>
-                            <option>Karur</option>
-                            <option>Krishnagiri</option>
-                            <option>Madurai</option>
-                            <option>Mayiladuthurai</option>
-                            <option>Nagapattinam</option>
-                            <option>Namakkal</option>
-                            <option>Ooty</option>
-                            <option>Perambalur</option>
-                            <option>Pudukkottai</option>
-                            <option>Ramanathapuram</option>
-                             <option>Salem</option>
-                             <option>Sivaganga</option>
-                             <option>Thanjavur</option>
-                             <option>Tiruvallur</option>
-                             <option>Tirunelveli</option>
-                             <option>Tiruppur</option>
-                             <option>Vellore</option>
-                             <option>Villupuram</option>
-                             <option>Virudhunagar</option>
-                            <!-- Add remaining districts here -->
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-2">
-                    <div class="form-group mt-3">
-                        <label class="pb-2" for="Address">Address</label>
-                        <select
-                            class="form-control form-select form-control-a"
-                            id="Address"
-                            name="address"
-                            required
-                        >
-                            <option value="">--Select Address--</option>
-                        </select>
-                    </div>
-                </div>
-            </div><br><br>
-            <div class="col-md-12">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-b">Predict Price</button>
-                </div>
-                <!-- Popup Modal -->
-                <div id="popup" class="modal" style="display: none;">
-                    <div class="modal-content">
-                        <span class="close-button" onclick="closeModal()">&times;</span>
-                        <div id="predicted-price" style="font-weight: bold;">Your predicted price is...</div>
-                        
-                    </div>
-                </div>
-            </div>   
-        </form>
-        
-    </div>
-</div>
-<style>
-
-    .modal {
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0,0,0,0.4);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .modal-content {
-        background-color: #fefefe;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 300px;
-        text-align: center;
-        position: relative;
-    }
-    .close-button {
-        color: #aaaaaa;
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-    .close-button:hover,
-    .close-button:focus {
-        color: black;
-    }
-    .btn {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        margin-top: 15px;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        border-radius: 4px;
-    }
-    .btn:hover {
-        background-color: #0056b3;
-    }
-</style>
-
-    
-
-
-<script>
-    const Addresss = {
-        "Ariyalur": ["Rajajinagar", "Near sivan kovil temple", "Ethraj Nagar"],
-        "Chengalpattu": ["Sai Nagar", "Alapakkam", "Pallava garden Pulipakkam", "Singaperumal Koil", "J C K Nagar", "Maraimalai Nagar", "Teachers Colony Nenmeli", "Sai Nagar Allapakkam", "Nenmeli", "Urapakkam", "Krishna nagar", "Chettipuniyam", "Mahindra World City", "Back side F8 cinemas Anna Nagar", "Paranur", "Chettipunniyam"],
-        "Chennai": ["West Jafferkhanpet", "Sithalapakkam", "Korattur", "Avadi", "Sholinganallur", "Kovur", "Alapakkam", "Thirupathi Nagar", "Anna nagar", "Ambattur", "VGP Layout Cholamandal Artists Village", "Navalur", "Porur", "Alwarpet", "RA Puram", "Chinna Neelankarai", "Kotturpuram"],
-        "Coimbatore": ["Saibaba Colony", "Pallapalayam", "Nehru nagar Housing unit", "Gandhi Park", "Kavundampalayam", "Venkitta Puram", "Othakalmandapam", "Venkatapuram", "Anna Nagar", "Peelamedu", "Malumichampatti", "Singanallur", "Krishna Garden Singanallur", "Sulur", "KK Pudur", "Selvapuram South", "Irugur", "Ganapathy", "Vilankurichi"],
-        "Cuddalore": ["Arumuganar Nagar", "Kumarapettai", "Graded Community", "Nayveli", "Chidambaram", "Koothapakkam", "Chavadi", "Tittakudi", "Vannarapalayam", "Vadalur", "Velisemmandalam", "Manjakuppam", "Virudhachalam", "Kondur", "Semmandalam", "Aanaikuppam"],
-        "Dharmapuri": ["Dharmapuri", "virupatchipuram", "Bharathipuram", "Gandhinagar", "Anjaneyur Kovil Street", "Pidamaneri", "Oddapatti", "Agraharam", "Karimangalam", "mathopu", "Palacode", "near municipal office", "Vediyappan thidhu", "Vennampatty", "Near ARP quarters", "Settikara", "TNHB colony", "Virupakshipuram", "Viswanathan nagar"],
-        "Dindigul": ["Modern nagar", "Chettinayakanpatti", "ellumaliyan nagar", "Moovendar Nagar", "MVM Nagar", "Oddanchatram", "Kaveri Nagar", "Thadikombu", "Nandavanapatti", "Begambur", "Devasahayam nagar", "Masilamanipuram", "GS NAGAR", "Mendonsa Colony", "Nagal Nagar", "Seelapadi Mahalakshmi Nagar", "Gujiliamparai", "nagal pudhur", "Arunachal nagar", "kamatchi nagar"],
-        "Erode": ["Perundurai Road", "B P Agraharam", "Mettukadai", "Sanjay Nagar", "Sampath Nagar", "Shastri Nagar", "Gobichettipalayam", "Solar Pirivu", "Modakurichi", "Veerappanchatram", "Erode Fort", "Teachers Colony", "Veepampalayam", "Thindal", "Chithode", "NEAR BVB CBSC SCHOOL"],
-        "Kallakurichi": ["Vasanthi illam"],
-        "Kanchipuram": ["Enathur", "Sevlimedu", "Kolathur", "Kancheepuram", "Chengalpattu", "Konerikuppam", "Pillayar palayam", "Chinna Kanchipuram", "Pillaiyarpalayam", "Abdullapuram", "Casagrand Arena", "Ennaikaran", "GV Construction Kanchipuram"],
-        "Kanyakumari": ["Ponnappa Nadar Colony", "Thuckalay", "Karungal", "Kulasekharam", "Suchindram", "Nagercoil", "Kottaram", "neela kanda swamy temple", "Asaripallam", "Agasteeswaram", "Palliyadi", "Vellamadam", "Vettuvenni", "palliyady", "Marthandam"],
-        "Karur": ["Vadivel Nagar", "Vennamalai", "Anbu Nagar", "Jawahar Bazaar", "Gowripuram extension2nd cross", "Andankoil East", "Rayanur", "Gandhigramam", "Thanthonimalai", "Vengamedu", "Reddipalayam", "Kamarajapuram", "Gandhigramam", "Gandhi Puram"],
-        "Krishnagiri": ["Kundarapalli", "Bargur", "Kattiganapalli", "Appanna Rao Street", "Sathya Sai Nagar", "MIG 153 1st Phase New Housing Board", "Pochampalli", "Shoolagiri", "Kaveripattinam", "Thiruvalluvar nagar", "TNHB", "Karapalli", "Kathujuganapalli", "Natarajan Layout", "Mookondapalli", "Somarpettai", "Eluvappalli", "Peddathalapalli", "Rajaji Nagar 7th Cross", "VKN stores", "Mathigiri"],
-        "Madurai": ["Nehru Nagar", "Nataraja Nagar", "Gomathipuram", "Vilangudi", "Otthakadai", "S Alangulam", "Kalavasal", "Mattuthavani", "Nagamalaipudukottai", "Surya Nagar", "Thiruparankundram", "Anaiyur", "Keelavasal", "Thiruppalai", "Sikkandar Savadi", "TPM NagarVirattipathu", "Avaniyapuram", "Uthangudi", "Muthu Patti", "Paravai", "THEPPAKULAM", "Alagappan Nagar"],
-        "Mayiladuthurai": ["Kamarajar Salai", "Koranad", "Nalathukkudi", "Cauvery nagar", "Senthangudi", "Dharmapuram"],
-        "Nagapattinam": ["Manjakollai", "Neela North Street", "Mayiladuthurai", "kilvelur", "Velippalayam"],
-        "Namakkal": ["Cauvery nagar", "Andavar Nagar", "Vathiyar thottam Rasipuram", "Mullai Nagar AS Pettai", "Tiruchengode", "Periyannan street RP pudur", "Bodhu Patty", "kongunagar namakka", "Kondichettipatti", "NGO Colony Chinnamuthalaipatti", "KMC Street", "Anbu Nagar2", "Salem Road RP pudur", "Kosavampatti", "S P Pudur", "Magilam residancy  Budan Santhai", "Ganga Nagar", "RP Pudur", "Thiruvalluvar Colony", "Kamaraj Nagar", "Chinnamuthalaipatti"],
-        "Ooty": ["Kotagiri", "Muthorai Palada", "Coonoor", "Fern Hill", "Ooty liberty theater Upper Bazar", "Havelock Road Sai Dharshan", "Main City", "Coonoor main city"],
-        "Perambalur": ["Eruvadi", "Alundur", "Vellalapatti", "Peddanapatti", "Oothukottai", "Selva Nagar", "Sappani", "Sikkandar", "Srikaranai", "Pothanur", "Peraiyur", "Pattakudi"],
-        "Pudukkottai": ["Pudukkottai", "Thiruvarankulam", "Kandarvakkottai", "Thiruvarankulam", "Pudukkottai"],
-        "Ramanathapuram": ["Peraiyur", "Palakkudi", "Karaikudi", "Katchal", "Koodal", "Kilakarai", "Maruthur", "Muthupatti", "Muthupatti", "Koodal", "Maruthur", "Ramanathapuram"],
-        "Salem": ["Loyola College", "Sundaravadi", "Sankari", "Salem City", "Omalur", "Mettur", "Erode Main Road", "Sankari", "Alagapuram", "Karuvadi", "Brahmapuram", "Kalipatti", "Pallapatti", "Ganesh Nagar"],
-        "Sivaganga": ["Kumaran Kovil", "Sivaganga", "Puthupatti", "Kattur", "Vallinayakanpatti", "Puthupatti", "Annavasal", "Thekkur", "Puthu Kulam", "Kottaiyur", "Vembakkottai", "Vembakkottai", "Kumaran Kovil", "Nagarathar", "Tiruppuvanam"],
-        "Thanjavur": ["Thanjavur", "Muthurajapuram", "Valangaiman", "Mankottai", "Thirukokarnam", "Puthuthalainayakan", "Thirukkandiyur", "Rudrasai", "Sakkottai", "Kothangudi", "Nadavarayanpatti"],
-        "Tiruvallur": ["Ibrahim patnam", "Periyapalayam", "Kundrathur", "Nandi Kovil", "Madhavaram", "Vadamadurai", "Redhills", "Pakkam", "Siddha Bavi", "Sriperumbudur", "Thirumazhisai", "Thirunindravur", "Tiruvallur"],
-        "Tirunelveli": ["Tirunelveli", "Raja Nagar", "Tenkasi", "Alangulam", "Puthiamputhur", "Vellamundam", "Ettaiyapuram", "Shenkottai", "Nellai", "Thirumangalam", "Sankarankovil"],
-        "Tiruppur": ["Pudupatti", "Kangayam", "Tiruppur", "Palladam", "Perumanallur", "Kaniyur", "Sivasakthi Nagar", "Pattaiyadi", "Sanjay Nagar", "Karamadai", "Chinnappampatti", "Kongu Nagar", "Vettuvankulam", "Dharamapuri", "Vettuvankulam"],
-        "Vellore": ["Alamelumangapuram", "Governer's Garden", "Tiruvannamalai", "Jainschool", "Puthur", "Uthangarai", "Ameerpet", "Kottakuppam", "Vaniyambadi", "Kammiyampettai", "Puthur", "Sathuvachari", "Puduvettai", "Jakkar", "Thunjaipallam", "Tiruvalangadu"],
-        "Villupuram": ["Villupuram", "Kandachipuram", "Mangalampadi", "Nambiyur", "Elavanasur", "Chennasamy Nagar", "Karuvakkadu", "Vadakkupattu", "Kamakshipuram", "Puthur", "Kottapattu", "J K Nagar", "Kakkaiyur", "Vikramangalam", "Boganapudi", "Vadipatti", "Mettukudi", "Sankaranpatti", "Melmaruvathur", "Nambiyur", "Nambiyur", "Sivaganga", "Nagapattinam"],
-        "Virudhunagar": ["Virudhunagar", "Sivakasi", "Kamaraj Nagar", "Muthupatti", "Sangam Nagar", "Mottapatti", "Kottaiyur", "Sakkottai", "Rajapalayam", "Sivakasi", "Virudhunagar", "Muthupatti", "Akkampatti", "Thiruthangal", "Kothai", "Tiruchuli"]
-
-    };
-
-    function updateAddresss() {
-        const districtSelect = document.getElementById('District');
-        const addressSelect = document.getElementById('Address');
-
-        // Clear previous options
-        addressSelect.innerHTML = '<option value="">--Select Address--</option>';
-
-        // Get the selected district
-        const selectedDistrict = districtSelect.value;
-
-        // Populate the address dropdown based on the selected district
-        if (selectedDistrict in Addresss) {
-            Addresss[selectedDistrict].forEach(function(address) {
-                const option = document.createElement('option');
-                option.value = address;
-                option.textContent = address;
-                addressSelect.appendChild(option);
-            });
-        }
-    }
-    document.getElementById('price-form').onsubmit = function(event) {
-        event.preventDefault();
-        
-        const formData = new FormData(this);
-        
-        fetch('/predict', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.text())
-        .then(priceText => {
-            document.getElementById('predicted-price').innerHTML = priceText;
-            document.getElementById('popup').style.display = 'flex';
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('predicted-price').innerText = 'An error occurred while predicting the price.';
-            document.getElementById('popup').style.display = 'flex';
-        });
-    };
-
-    function closeModal() {
-        document.getElementById('popup').style.display = 'none';
-    }
-
-
-</script>
-<!-- ******* Header/Navbar ******* -->
-<nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top" style="background-color: white;">
-    <div class="container">
-        <button
-            class="navbar-toggler collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarDefault"
-            aria-controls="navbarDefault"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        >
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        
-        <a class="navbar-brand text-brand" href="/">Rent<span class="color-b">Findr</span></a>
-
-        <div class="collapse navbar-collapse justify-content-center" id="navbarDefault">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link " href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about.html">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/property-grid.html">Property</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact.html">Contact</a>
-                </li>
-                {% if user_logged_in %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user-secret"></i>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                        <li><span class="dropdown-item">Welcome, {{ username }}!</span></li>
-                        <li><span class="dropdown-item">Looking For: {{ looking_for }}</span></li>
-                        <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>  <!-- Link to the dashboard -->
-                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                    </ul>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link " href="/login.html">Login</a>
-                </li>
-                {% endif %}
-
-                
-            </ul>
-            
-            
+<body>
+    <!-- ******* Property Search div ******* -->
+    <div class="click-closed"></div>
+    <!--/ Form Search Star /-->
+    <div class="box-collapse" style="background-color: white">
+        <div class="title-box-d">
+            <h3 class="title-d">Predict SquareFeet Price</h3>
         </div>
-        
-        <button
-                    type="button"
-                    class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarTogglerDemo01"
-                    >
-                    <img src="/static/assets/img/icon.png" alt="Search Icon">
-                </button>
-    </div>
-</nav>
-
-
-
-    
-        <main id="main">
-            <!-- ======= Intro Single ======= -->
-            <section class="intro-single">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-8">
-                            <div class="title-single-box">
-                                <h1 class="title-single">006 Modern Town House</h1>
-                                <span class="color-text-a"
-                                    >T Nagar Chennai-600006</span
-                                >
-                            </div>
+        <span class="close-box-collapse right-boxed bi bi-x"></span>
+        <div class="box-collapse-wrap form">
+            <form class="form-a" id="price-form" method="POST" action="/predict">
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group">
+                            <label class="pb-2" for="Sqft">Enter Sqft</label>
+                            <input type="text" class="form-control form-control-lg form-control-a" placeholder="Sqft"
+                                id="Sqft" name="sqft" required />
                         </div>
-                        <div class="col-md-12 col-lg-4">
-                            <nav
-                                aria-label="breadcrumb"
-                                class="breadcrumb-box d-flex justify-content-lg-end"
-                            >
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="{{ url_for('index') }}">Home</a>
-                                    </li>
-                                    <li class="breadcrumb-item">
-                                        <a href="property-grid.html"
-                                            >Properties</a
-                                        >
-                                    </li>
-                                    <li
-                                        class="breadcrumb-item active"
-                                        aria-current="page"
-                                    >
-                                        006 Modern Town House
-                                    </li>
-                                </ol>
-                            </nav>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="form-group mt-3">
+                            <label class="pb-2" for="District">District</label>
+                            <select class="form-control form-select form-control-a" id="District" name="district"
+                                onchange="updateAddresss()" required>
+                                <option value="">--Select District--</option>
+                                <option>Ariyalur</option>
+                                <option>Chengalpattu</option>
+                                <option>Chennai</option>
+                                <option>Coimbatore</option>
+                                <option>Cuddalore</option>
+                                <option>Dharmapuri</option>
+                                <option>Dindigul</option>
+                                <option>Erode</option>
+                                <option>Kallakurichi</option>
+                                <option>Kanchipuram</option>
+                                <option>Karur</option>
+                                <option>Krishnagiri</option>
+                                <option>Madurai</option>
+                                <option>Mayiladuthurai</option>
+                                <option>Nagapattinam</option>
+                                <option>Namakkal</option>
+                                <option>Ooty</option>
+                                <option>Perambalur</option>
+                                <option>Pudukkottai</option>
+                                <option>Ramanathapuram</option>
+                                <option>Salem</option>
+                                <option>Sivaganga</option>
+                                <option>Thanjavur</option>
+                                <option>Tiruvallur</option>
+                                <option>Tirunelveli</option>
+                                <option>Tiruppur</option>
+                                <option>Vellore</option>
+                                <option>Villupuram</option>
+                                <option>Virudhunagar</option>
+                                <!-- Add remaining districts here -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="form-group mt-3">
+                            <label class="pb-2" for="Address">Address</label>
+                            <select class="form-control form-select form-control-a" id="Address" name="address"
+                                required>
+                                <option value="">--Select Address--</option>
+                            </select>
+                        </div>
+                    </div>
+                </div><br><br>
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-b">Predict Price</button>
+                    </div>
+                    <!-- Popup Modal -->
+                    <div id="popup" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close-button" onclick="closeModal()">&times;</span>
+                            <div id="predicted-price" style="font-weight: bold;">Your predicted price is...</div>
+
                         </div>
                     </div>
                 </div>
-            </section>
-            <!-- End Intro Single-->
+            </form>
 
-            <!-- ======= Property Single ======= -->
-            <section class="property-single nav-arrow-b">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <div id="property-single-carousel" class="swiper">
-                                <div class="swiper-wrapper">
-                                    <div class="carousel-item-b swiper-slide">
-                                        <img
-                                            src="/static/assets/img/slide-2.jpg"
-                                            alt=""
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="property-single-carousel-pagination carousel-pagination"
-                            ></div>
+        </div>
+    </div>
+    <style>
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: white display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-button {
+            color: #aaaaaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+
+
+
+    <script>
+        const Addresss = {
+            "Ariyalur": ["Rajajinagar", "Near sivan kovil temple", "Ethraj Nagar"],
+            "Chengalpattu": ["Sai Nagar", "Alapakkam", "Pallava garden Pulipakkam", "Singaperumal Koil", "J C K Nagar", "Maraimalai Nagar", "Teachers Colony Nenmeli", "Sai Nagar Allapakkam", "Nenmeli", "Urapakkam", "Krishna nagar", "Chettipuniyam", "Mahindra World City", "Back side F8 cinemas Anna Nagar", "Paranur", "Chettipunniyam"],
+            "Chennai": ["West Jafferkhanpet", "Sithalapakkam", "Korattur", "Avadi", "Sholinganallur", "Kovur", "Alapakkam", "Thirupathi Nagar", "Anna nagar", "Ambattur", "VGP Layout Cholamandal Artists Village", "Navalur", "Porur", "Alwarpet", "RA Puram", "Chinna Neelankarai", "Kotturpuram"],
+            "Coimbatore": ["Saibaba Colony", "Pallapalayam", "Nehru nagar Housing unit", "Gandhi Park", "Kavundampalayam", "Venkitta Puram", "Othakalmandapam", "Venkatapuram", "Anna Nagar", "Peelamedu", "Malumichampatti", "Singanallur", "Krishna Garden Singanallur", "Sulur", "KK Pudur", "Selvapuram South", "Irugur", "Ganapathy", "Vilankurichi"],
+            "Cuddalore": ["Arumuganar Nagar", "Kumarapettai", "Graded Community", "Nayveli", "Chidambaram", "Koothapakkam", "Chavadi", "Tittakudi", "Vannarapalayam", "Vadalur", "Velisemmandalam", "Manjakuppam", "Virudhachalam", "Kondur", "Semmandalam", "Aanaikuppam"],
+            "Dharmapuri": ["Dharmapuri", "virupatchipuram", "Bharathipuram", "Gandhinagar", "Anjaneyur Kovil Street", "Pidamaneri", "Oddapatti", "Agraharam", "Karimangalam", "mathopu", "Palacode", "near municipal office", "Vediyappan thidhu", "Vennampatty", "Near ARP quarters", "Settikara", "TNHB colony", "Virupakshipuram", "Viswanathan nagar"],
+            "Dindigul": ["Modern nagar", "Chettinayakanpatti", "ellumaliyan nagar", "Moovendar Nagar", "MVM Nagar", "Oddanchatram", "Kaveri Nagar", "Thadikombu", "Nandavanapatti", "Begambur", "Devasahayam nagar", "Masilamanipuram", "GS NAGAR", "Mendonsa Colony", "Nagal Nagar", "Seelapadi Mahalakshmi Nagar", "Gujiliamparai", "nagal pudhur", "Arunachal nagar", "kamatchi nagar"],
+            "Erode": ["Perundurai Road", "B P Agraharam", "Mettukadai", "Sanjay Nagar", "Sampath Nagar", "Shastri Nagar", "Gobichettipalayam", "Solar Pirivu", "Modakurichi", "Veerappanchatram", "Erode Fort", "Teachers Colony", "Veepampalayam", "Thindal", "Chithode", "NEAR BVB CBSC SCHOOL"],
+            "Kallakurichi": ["Vasanthi illam"],
+            "Kanchipuram": ["Enathur", "Sevlimedu", "Kolathur", "Kancheepuram", "Chengalpattu", "Konerikuppam", "Pillayar palayam", "Chinna Kanchipuram", "Pillaiyarpalayam", "Abdullapuram", "Casagrand Arena", "Ennaikaran", "GV Construction Kanchipuram"],
+            "Kanyakumari": ["Ponnappa Nadar Colony", "Thuckalay", "Karungal", "Kulasekharam", "Suchindram", "Nagercoil", "Kottaram", "neela kanda swamy temple", "Asaripallam", "Agasteeswaram", "Palliyadi", "Vellamadam", "Vettuvenni", "palliyady", "Marthandam"],
+            "Karur": ["Vadivel Nagar", "Vennamalai", "Anbu Nagar", "Jawahar Bazaar", "Gowripuram extension2nd cross", "Andankoil East", "Rayanur", "Gandhigramam", "Thanthonimalai", "Vengamedu", "Reddipalayam", "Kamarajapuram", "Gandhigramam", "Gandhi Puram"],
+            "Krishnagiri": ["Kundarapalli", "Bargur", "Kattiganapalli", "Appanna Rao Street", "Sathya Sai Nagar", "MIG 153 1st Phase New Housing Board", "Pochampalli", "Shoolagiri", "Kaveripattinam", "Thiruvalluvar nagar", "TNHB", "Karapalli", "Kathujuganapalli", "Natarajan Layout", "Mookondapalli", "Somarpettai", "Eluvappalli", "Peddathalapalli", "Rajaji Nagar 7th Cross", "VKN stores", "Mathigiri"],
+            "Madurai": ["Nehru Nagar", "Nataraja Nagar", "Gomathipuram", "Vilangudi", "Otthakadai", "S Alangulam", "Kalavasal", "Mattuthavani", "Nagamalaipudukottai", "Surya Nagar", "Thiruparankundram", "Anaiyur", "Keelavasal", "Thiruppalai", "Sikkandar Savadi", "TPM NagarVirattipathu", "Avaniyapuram", "Uthangudi", "Muthu Patti", "Paravai", "THEPPAKULAM", "Alagappan Nagar"],
+            "Mayiladuthurai": ["Kamarajar Salai", "Koranad", "Nalathukkudi", "Cauvery nagar", "Senthangudi", "Dharmapuram"],
+            "Nagapattinam": ["Manjakollai", "Neela North Street", "Mayiladuthurai", "kilvelur", "Velippalayam"],
+            "Namakkal": ["Cauvery nagar", "Andavar Nagar", "Vathiyar thottam Rasipuram", "Mullai Nagar AS Pettai", "Tiruchengode", "Periyannan street RP pudur", "Bodhu Patty", "kongunagar namakka", "Kondichettipatti", "NGO Colony Chinnamuthalaipatti", "KMC Street", "Anbu Nagar2", "Salem Road RP pudur", "Kosavampatti", "S P Pudur", "Magilam residancy  Budan Santhai", "Ganga Nagar", "RP Pudur", "Thiruvalluvar Colony", "Kamaraj Nagar", "Chinnamuthalaipatti"],
+            "Ooty": ["Kotagiri", "Muthorai Palada", "Coonoor", "Fern Hill", "Ooty liberty theater Upper Bazar", "Havelock Road Sai Dharshan", "Main City", "Coonoor main city"],
+            "Perambalur": ["Eruvadi", "Alundur", "Vellalapatti", "Peddanapatti", "Oothukottai", "Selva Nagar", "Sappani", "Sikkandar", "Srikaranai", "Pothanur", "Peraiyur", "Pattakudi"],
+            "Pudukkottai": ["Pudukkottai", "Thiruvarankulam", "Kandarvakkottai", "Thiruvarankulam", "Pudukkottai"],
+            "Ramanathapuram": ["Peraiyur", "Palakkudi", "Karaikudi", "Katchal", "Koodal", "Kilakarai", "Maruthur", "Muthupatti", "Muthupatti", "Koodal", "Maruthur", "Ramanathapuram"],
+            "Salem": ["Loyola College", "Sundaravadi", "Sankari", "Salem City", "Omalur", "Mettur", "Erode Main Road", "Sankari", "Alagapuram", "Karuvadi", "Brahmapuram", "Kalipatti", "Pallapatti", "Ganesh Nagar"],
+            "Sivaganga": ["Kumaran Kovil", "Sivaganga", "Puthupatti", "Kattur", "Vallinayakanpatti", "Puthupatti", "Annavasal", "Thekkur", "Puthu Kulam", "Kottaiyur", "Vembakkottai", "Vembakkottai", "Kumaran Kovil", "Nagarathar", "Tiruppuvanam"],
+            "Thanjavur": ["Thanjavur", "Muthurajapuram", "Valangaiman", "Mankottai", "Thirukokarnam", "Puthuthalainayakan", "Thirukkandiyur", "Rudrasai", "Sakkottai", "Kothangudi", "Nadavarayanpatti"],
+            "Tiruvallur": ["Ibrahim patnam", "Periyapalayam", "Kundrathur", "Nandi Kovil", "Madhavaram", "Vadamadurai", "Redhills", "Pakkam", "Siddha Bavi", "Sriperumbudur", "Thirumazhisai", "Thirunindravur", "Tiruvallur"],
+            "Tirunelveli": ["Tirunelveli", "Raja Nagar", "Tenkasi", "Alangulam", "Puthiamputhur", "Vellamundam", "Ettaiyapuram", "Shenkottai", "Nellai", "Thirumangalam", "Sankarankovil"],
+            "Tiruppur": ["Pudupatti", "Kangayam", "Tiruppur", "Palladam", "Perumanallur", "Kaniyur", "Sivasakthi Nagar", "Pattaiyadi", "Sanjay Nagar", "Karamadai", "Chinnappampatti", "Kongu Nagar", "Vettuvankulam", "Dharamapuri", "Vettuvankulam"],
+            "Vellore": ["Alamelumangapuram", "Governer's Garden", "Tiruvannamalai", "Jainschool", "Puthur", "Uthangarai", "Ameerpet", "Kottakuppam", "Vaniyambadi", "Kammiyampettai", "Puthur", "Sathuvachari", "Puduvettai", "Jakkar", "Thunjaipallam", "Tiruvalangadu"],
+            "Villupuram": ["Villupuram", "Kandachipuram", "Mangalampadi", "Nambiyur", "Elavanasur", "Chennasamy Nagar", "Karuvakkadu", "Vadakkupattu", "Kamakshipuram", "Puthur", "Kottapattu", "J K Nagar", "Kakkaiyur", "Vikramangalam", "Boganapudi", "Vadipatti", "Mettukudi", "Sankaranpatti", "Melmaruvathur", "Nambiyur", "Nambiyur", "Sivaganga", "Nagapattinam"],
+            "Virudhunagar": ["Virudhunagar", "Sivakasi", "Kamaraj Nagar", "Muthupatti", "Sangam Nagar", "Mottapatti", "Kottaiyur", "Sakkottai", "Rajapalayam", "Sivakasi", "Virudhunagar", "Muthupatti", "Akkampatti", "Thiruthangal", "Kothai", "Tiruchuli"]
+
+        };
+
+        function updateAddresss() {
+            const districtSelect = document.getElementById('District');
+            const addressSelect = document.getElementById('Address');
+
+            // Clear previous options
+            addressSelect.innerHTML = '<option value="">--Select Address--</option>';
+
+            // Get the selected district
+            const selectedDistrict = districtSelect.value;
+
+            // Populate the address dropdown based on the selected district
+            if (selectedDistrict in Addresss) {
+                Addresss[selectedDistrict].forEach(function (address) {
+                    const option = document.createElement('option');
+                    option.value = address;
+                    option.textContent = address;
+                    addressSelect.appendChild(option);
+                });
+            }
+        }
+
+        document.getElementById('price-form').onsubmit = function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.text())
+                .then(priceText => {
+                    document.getElementById('predicted-price').innerHTML = priceText;
+                    document.getElementById('popup').style.display = 'flex';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('predicted-price').innerText = 'An error occurred while predicting the price.';
+                    document.getElementById('popup').style.display = 'flex';
+                });
+        };
+
+        function closeModal() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+    </script>
+    <!-- ******* Header/Navbar ******* -->
+    <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top" style="background-color: white;">
+        <div class="container">
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <a class="navbar-brand text-brand" href="/">Rent<span class="color-b">Findr</span></a>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarDefault">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link " href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/property-grid.html">Property</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact.html">Contact</a>
+                    </li>
+                    {% if user_logged_in %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user-secret"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <li><span class="dropdown-item">Welcome, {{ username }}!</span></li>
+                            {% if looking_for %}
+                            <li><span class="dropdown-item">Looking For: {{ looking_for }}</span></li>
+                            {% endif %}
+                            <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                            <!-- Link to the dashboard -->
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link " href="/login.html">Login</a>
+                    </li>
+                    {% endif %}
+
+
+                </ul>
+
+
+            </div>
+
+            <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse"
+                data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
+                <img src="/static/assets/img/icon.png" alt="Search Icon">
+            </button>
+        </div>
+    </nav>
+    <main id="main">
+        <!-- ======= Intro Single ======= -->
+        <section class="intro-single">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-8">
+                        <div class="title-single-box">
+                            <h1 class="title-single">006 Modern Town House</h1>
+                            <span class="color-text-a">T Nagar Chennai-600006</span>
                         </div>
                     </div>
+                    <div class="col-md-12 col-lg-4">
+                        <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ url_for('index') }}">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="property-grid.html">Properties</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    006 Modern Town House
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Intro Single-->
 
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="row justify-content-between">
-                                <div class="col-md-5 col-lg-4">
-                                    <div
-                                        class="property-price d-flex justify-content-center foo"
-                                    >
-                                        <div class="card-header-c d-flex">
-                                            <div class="card-box-ico">
-                                                <span class="bi bi-cash"
-                                                    > ₹</span
-                                                >
-                                            </div>
-                                            <div
-                                                class="card-title-c align-self-center"
-                                            >
-                                                <h5 class="title-c">25,000</h5>
-                                            </div>
+        <!-- ======= Property Single ======= -->
+        <section class="property-single nav-arrow-b">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div id="property-single-carousel" class="swiper">
+                            <div class="swiper-wrapper">
+                                <div class="carousel-item-b swiper-slide">
+                                    <img src="/static/assets/img/slide-2.jpg" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="property-single-carousel-pagination carousel-pagination"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row justify-content-between">
+                            <div class="col-md-5 col-lg-4">
+                                <div class="property-price d-flex justify-content-center foo">
+                                    <div class="card-header-c d-flex">
+                                        <div class="card-box-ico">
+                                            <span class="bi bi-cash"> ₹</span>
                                         </div>
-                                    </div>
-                                    <div class="property-summary">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div
-                                                    class="title-box-d section-t4"
-                                                >
-                                                    <h3 class="title-d">
-                                                        Quick Summary
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="summary-list">
-                                            <ul class="list">
-                                                <li
-                                                    class="d-flex justify-content-between"
-                                                >
-                                                    <strong
-                                                        >Property ID:</strong
-                                                    >
-                                                    <span>006</span>
-                                                </li>
-                                                <li
-                                                    class="d-flex justify-content-between"
-                                                >
-                                                    <strong>Location:</strong>
-                                                    <span
-                                                        >Chennai,T Nagar-600006
-                                                        </span
-                                                    >
-                                                </li>
-                                                <li
-                                                    class="d-flex justify-content-between"
-                                                >
-                                                    <strong
-                                                        >Property Type:</strong
-                                                    >
-                                                    <span>House</span>
-                                                </li>
-                                                <li
-                                                    class="d-flex justify-content-between"
-                                                >
-                                                    <strong>Status:</strong>
-                                                    <span>Sale</span>
-                                                </li>
-                                                <li
-                                                    class="d-flex justify-content-between"
-                                                >
-                                                    <strong>Area:</strong>
-                                                    <span
-                                                        >340m
-                                                        <sup>2</sup>
-                                                    </span>
-                                                </li>
-                                                <li
-                                                    class="d-flex justify-content-between"
-                                                >
-                                                    <strong>Beds:</strong>
-                                                    <span>4</span>
-                                                </li>
-                                                <li
-                                                    class="d-flex justify-content-between"
-                                                >
-                                                    <strong>Baths:</strong>
-                                                    <span>2</span>
-                                                </li>
-                                                <li
-                                                    class="d-flex justify-content-between"
-                                                >
-                                                    <strong>Yard:</strong>
-                                                    <span>1</span>
-                                                </li>
-                                            </ul>
+                                        <div class="card-title-c align-self-center">
+                                            <h5 class="title-c">25,000</h5>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-7 col-lg-7 section-md-t3">
+                                <div class="property-summary">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <div class="title-box-d">
+                                            <div class="title-box-d section-t4">
                                                 <h3 class="title-d">
-                                                    Property Description
+                                                    Quick Summary
                                                 </h3>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="property-description">
-                                        <p class="description color-text-a">
-                                            Nestled within the vibrant neighborhood of Chennai, T Nagar, this stunning property offers a harmonious blend of modern luxury and urban convenience. Situated in a prime location, this meticulously designed house presents an unparalleled opportunity to experience the epitome of upscale living in one of Mumbai's most sought-after areas.
-                                        </p>
-                                        <p
-                                            class="description color-text-a no-margin"
-                                        >
-                                        Experience the ultimate in luxury living with this exceptional property in Chennai,T Nagar. 
-                                        Don't miss out on the opportunity to make this house your dream home. 
-                                        </p>
-                                    </div>
-                                    <div class="row section-t3">
-                                        <div class="col-sm-12">
-                                            <div class="title-box-d">
-                                                <h3 class="title-d">
-                                                    Amenities
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="amenities-list color-text-a">
-                                        <ul class="list-a no-margin">
-                                            <li>Balcony</li>
-                                            <li>Outdoor Kitchen</li>
-                                            <li>Cable Tv</li>
-                                            <li>Deck</li>
-                                            <li>Tennis Courts</li>
-                                            <li>Internet</li>
-                                            <li>Parking</li>
-                                            <li>Sun Room</li>
-                                            <li>Concrete Flooring</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-10 offset-md-1">
-                            <ul
-                                class="nav nav-pills-a nav-pills mb-3 section-t3"
-                                id="pills-tab"
-                                role="tablist"
-                            >
-                                
-                                
-                                <li class="nav-item">
-                                    <a
-                                        class="nav-link"
-                                        id="pills-map-tab"
-                                        data-bs-toggle="pill"
-                                        href="#pills-map"
-                                        role="tab"
-                                        aria-controls="pills-map"
-                                        aria-selected="false"
-                                        >Location</a
-                                    >
-                                </li>
-                            </ul>
-                            
-                        </div>
-
-                        <div class="col-sm-12">
-                            <div class="contact-map box">
-                                <div id="map" class="contact-map">
-                                    <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15547.563685544876!2d80.22835409057802!3d13.04261455074025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526655a5da2371%3A0x4954f49743f04af0!2sT.%20Nagar%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1730211397664!5m2!1sen!2sin"                                        
-                                        width="100%"
-                                        height="450"
-                                        frameborder="0"
-                                        style="border: 0"
-                                        allowfullscreen
-                                    ></iframe>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row section-t3">
-                                <div class="col-sm-12">
-                                    <div class="title-box-d">
-                                        <h3 class="title-d">Contact Agent</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-lg-4">
-                                    <img
-                                        src="/static/assets/img/agent-4.jpg"
-                                        alt=""
-                                        class="img-fluid"
-                                    />
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="property-agent">
-                                        <h4 class="title-agent">
-                                            Arun
-                                        </h4>
-                                        <p class="color-text-a">
-                                            "Diligent, knowledgeable, negotiator, client-focused, resourceful, proactive, communicative, trustworthy, experienced, responsive, adaptable, personable, detail-oriented, driven."
-                                        </p>
-                                        <ul class="list-unstyled">
-                                            <li
-                                                class="d-flex justify-content-between"
-                                            >
-                                                <strong>Phone:</strong>
-                                                <span class="color-text-a"
-                                                    >+91 1234-895-463</span
-                                                >
-                                        </li>
-
-                                            <li
-                                                class="d-flex justify-content-between"
-                                            >
-                                                <strong>Email:</strong>
-                                                <span class="color-text-a"
-                                                    >arun@gmail.com</span
-                                                >
+                                    <div class="summary-list">
+                                        <ul class="list">
+                                            <li class="d-flex justify-content-between">
+                                                <strong>Property ID:</strong>
+                                                <span>006</span>
+                                            </li>
+                                            <li class="d-flex justify-content-between">
+                                                <strong>Location:</strong>
+                                                <span>Chennai,T Nagar-600006
+                                                </span>
+                                            </li>
+                                            <li class="d-flex justify-content-between">
+                                                <strong>Property Type:</strong>
+                                                <span>House</span>
+                                            </li>
+                                            <li class="d-flex justify-content-between">
+                                                <strong>Status:</strong>
+                                                <span>Sale</span>
+                                            </li>
+                                            <li class="d-flex justify-content-between">
+                                                <strong>Area:</strong>
+                                                <span>340m
+                                                    <sup>2</sup>
+                                                </span>
+                                            </li>
+                                            <li class="d-flex justify-content-between">
+                                                <strong>Beds:</strong>
+                                                <span>4</span>
+                                            </li>
+                                            <li class="d-flex justify-content-between">
+                                                <strong>Baths:</strong>
+                                                <span>2</span>
+                                            </li>
+                                            <li class="d-flex justify-content-between">
+                                                <strong>Yard:</strong>
+                                                <span>1</span>
                                             </li>
                                         </ul>
-                                        
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-lg-4">
-                                    <div class="property-contact">
-                                        <form
-                                        action="http://localhost:3000/send"
-                                        method="post"
-                                        role="form"
+                            </div>
+                            <div class="col-md-7 col-lg-7 section-md-t3">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="title-box-d">
+                                            <h3 class="title-d">
+                                                Property Description
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="property-description">
+                                    <p class="description color-text-a">
+                                        Nestled within the vibrant neighborhood of Chennai, T Nagar, this stunning
+                                        property offers a harmonious blend of modern luxury and urban convenience.
+                                        Situated in a prime location, this meticulously designed house presents an
+                                        unparalleled opportunity to experience the epitome of upscale living in one of
+                                        Mumbai's most sought-after areas.
+                                    </p>
+                                    <p class="description color-text-a no-margin">
+                                        Experience the ultimate in luxury living with this exceptional property in
+                                        Chennai,T Nagar.
+                                        Don't miss out on the opportunity to make this house your dream home.
+                                    </p>
+                                </div>
+                                <div class="row section-t3">
+                                    <div class="col-sm-12">
+                                        <div class="title-box-d">
+                                            <h3 class="title-d">
+                                                Amenities
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="amenities-list color-text-a">
+                                    <ul class="list-a no-margin">
+                                        <li>Balcony</li>
+                                        <li>Outdoor Kitchen</li>
+                                        <li>Cable Tv</li>
+                                        <li>Deck</li>
+                                        <li>Tennis Courts</li>
+                                        <li>Internet</li>
+                                        <li>Parking</li>
+                                        <li>Sun Room</li>
+                                        <li>Concrete Flooring</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10 offset-md-1">
+                        <ul class="nav nav-pills-a nav-pills mb-3 section-t3" id="pills-tab" role="tablist">
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-map-tab" data-bs-toggle="pill" href="#pills-map"
+                                    role="tab" aria-controls="pills-map" aria-selected="false">Location</a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="contact-map box">
+                            <div id="map" class="contact-map">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15547.563685544876!2d80.22835409057802!3d13.04261455074025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526655a5da2371%3A0x4954f49743f04af0!2sT.%20Nagar%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1730211397664!5m2!1sen!2sin"
+                                    width="100%" height="450" frameborder="0" style="border: 0"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row section-t3">
+                            <div class="col-sm-12">
+                                <div class="title-box-d">
+                                    <h3 class="title-d">Contact Agent</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4">
+                                <img src="/static/assets/img/agent-4.jpg" alt="" class="img-fluid" />
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="property-agent">
+                                    <h4 class="title-agent">
+                                        Arun
+                                    </h4>
+                                    <p class="color-text-a">
+                                        "Diligent, knowledgeable, negotiator, client-focused, resourceful, proactive,
+                                        communicative, trustworthy, experienced, responsive, adaptable, personable,
+                                        detail-oriented, driven."
+                                    </p>
+                                    <ul class="list-unstyled">
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Phone:</strong>
+                                            <span class="color-text-a">+91 1234-895-463</span>
+                                        </li>
+
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Email:</strong>
+                                            <span class="color-text-a">arun@gmail.com</span>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-lg-4">
+                                <div class="property-contact">
+                                    <form action="http://localhost:3000/send" method="post" role="form"
                                         class="php-email-form">
 
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <div class="form-group">
-                                                    <input
-                                                        type="text"
-                                                        name="name"
+                                                    <input type="text" name="name"
                                                         class="form-control form-control-lg form-control-a"
-                                                        placeholder="Your Name"
-                                                        required
-                                                    />
+                                                        placeholder="Your Name" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <div class="form-group">
-                                                    <input
-                                                        name="email"
-                                                        type="email"
+                                                    <input name="email" type="email"
                                                         class="form-control form-control-lg form-control-a"
-                                                        placeholder="Your Email"
-                                                        required
-                                                    />
+                                                        placeholder="Your Email" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3">
                                                 <div class="form-group">
-                                                    <input
-                                                        type="text"
-                                                        name="subject"
+                                                    <input type="text" name="subject"
                                                         class="form-control form-control-lg form-control-a"
-                                                        placeholder="Subject"
-                                                        required
-                                                    />
+                                                        placeholder="Subject" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <textarea
-                                                        name="message"
-                                                        class="form-control"
-                                                        name="message"
-                                                        cols="45"
-                                                        rows="8"
-                                                        placeholder="Message"
-                                                        required
-                                                    ></textarea>
+                                                    <textarea name="message" class="form-control" name="message"
+                                                        cols="45" rows="8" placeholder="Message" required></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 my-3">
@@ -700,9 +574,7 @@
                                                     <div class="loading">
                                                         Loading
                                                     </div>
-                                                    <div
-                                                        class="error-message"
-                                                    ></div>
+                                                    <div class="error-message"></div>
                                                     <div class="sent-message">
                                                         We got your message. Thank You !
                                                     </div>
@@ -710,250 +582,209 @@
                                             </div>
 
                                             <div class="col-md-12 text-center">
-                                                <button
-                                                    type="submit"
-                                                    class="btn btn-a"
-                                                >
+                                                <button type="submit" class="btn btn-a">
                                                     Send Message
                                                 </button>
                                             </div>
                                         </div>
                                     </form>
-                                    <!-- Add this script right before the closing </body> tag in your HTML -->
 
-                                   
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- End Property Single-->
-        </main>
-        <!-- End #main -->
 
-        <!-- ======= Footer ======= -->
-        <section class="section-footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 col-md-4">
-                        <div class="widget-a">
-                            <div class="w-header-a">
-                                <h3 class="w-title-a text-brand">RentFindr</h3>
-                            </div>
-                            <div class="w-body-a">
-                                <p class="w-text-a color-text-a">
-                                    Get ready to discover the perfect place to call home, right next door. Welcome to a world of possibilities, welcome to Rent Findr.
-                                </p>
-                            </div>
-                            <div class="w-footer-a">
-                                <ul class="list-unstyled">
-                                    <li class="color-a">
-                                        <span class="color-text-a"
-                                            >Phone .</span
-                                        >
-                                        rentfindr@gmail.com
-                                    </li>
-                                    <li class="color-a">
-                                        <span class="color-text-a"
-                                            >Email .</span
-                                        >
-                                        +91 123-456-7891
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4 section-md-t3">
-                        <div class="widget-a">
-                            <div class="w-header-a">
-                                <h3 class="w-title-a text-brand">
-                                    The Company
-                                </h3>
-                            </div>
-                            <div class="w-body-a">
-                                <div class="w-body-a">
-                                    <ul class="list-unstyled">
-                                        <li class="item-list-a">
-                                            <i class="bi bi-chevron-right"></i>
-                                            <a href="contact.html">Site Map</a>
-                                        </li>
-                                        
-                                    </ul>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4 section-md-t3">
-                        <div class="widget-a">
-                            <div class="w-header-a">
-                                <h3 class="w-title-a text-brand">
-                                    Our Services
-                                </h3>
-                            </div>
-                            <div class="w-body-a">
-                                <ul class="list-unstyled">
-                                    <li class="item-list-a">
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="property-grid.html">Apartment Rent</a>
-                                    </li>
-                                    <li class="item-list-a">
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="property-grid.html">House Rent</a>
-                                    </li>
-                                    <li class="item-list-a">
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="property-grid.html">Land Lease</a>
-                                    </li>
-                                    <li class="item-list-a">
-                                        <i class="bi bi-chevron-right"></i>
-                                        <a href="property-grid.html">Villa Rent</a>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <nav class="nav-footer">
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <a href="index.html">Home</a>
+        <!-- End Property Single-->
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <section class="section-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-4">
+                    <div class="widget-a">
+                        <div class="w-header-a">
+                            <h3 class="w-title-a text-brand">RentFindr</h3>
+                        </div>
+                        <div class="w-body-a">
+                            <p class="w-text-a color-text-a">
+                                Get ready to discover the perfect place to call home, right next door. Welcome to a
+                                world of possibilities, welcome to Rent Findr.
+                            </p>
+                        </div>
+                        <div class="w-footer-a">
+                            <ul class="list-unstyled">
+                                <li class="color-a">
+                                    <span class="color-text-a">Email .</span>
+                                    rentfindr@gmail.com
                                 </li>
-                                <li class="list-inline-item">
-                                    <a href="about.html">About</a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="property-grid.html">Property</a>
-                                </li>
-                                
-                                <li class="list-inline-item">
-                                    <a href="contact.html">Contact</a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <div class="socials-a">
-                            <ul class="list-inline">
-                                <li
-                                    class="list-inline-item"
-                                >
-                                    <a
-                                        href="https://www.facebook.com/snsinstitutions/photos/?_rdr"
-                                        class="link-one"
-                                    >
-                                        <i
-                                            class="bi bi-facebook"
-                                            aria-hidden="true"
-                                        ></i>
-                                    </a>
-                                </li>
-                                <li
-                                    class="list-inline-item"
-                                >
-                                    <a
-                                        href="https://x.com/snsinstitutions"
-                                        class="link-one"
-                                    >
-                                        <i
-                                            class="bi bi-twitter"
-                                            aria-hidden="true"
-                                        ></i>
-                                    </a>
-                                </li>
-                                <li
-                                    class="list-inline-item"
-                                >
-                                    <a
-                                        href="https://www.instagram.com/snsinstitutions/?hl=en"
-                                        class="link-one"
-                                    >
-                                        <i
-                                            class="bi bi-instagram"
-                                            aria-hidden="true"
-                                        ></i>
-                                    </a>
-                                </li>
-                                <li
-                                    class="list-inline-item"
-                                >
-                                    <a
-                                        href="https://www.linkedin.com/school/snsinstitutions/posts/?feedView=all"
-                                        class="link-one"
-                                    >
-                                        <i
-                                            class="bi bi-linkedin"
-                                            aria-hidden="true"
-                                        ></i>
-                                    </a>
+                                <li class="color-a">
+                                    <span class="color-text-a">Phone .</span>
+                                    +91 123-456-7891
                                 </li>
                             </ul>
                         </div>
-                        <div class="copyright-footer">
-                            <p class="copyright color-text-a">
-                                &copy; Copyright
-                                <span class="color-a">RentFindr</span> All Rights
-                                Reserved.
-                            </p>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 section-md-t3">
+                    <div class="widget-a">
+                        <div class="w-header-a">
+                            <h3 class="w-title-a text-brand">
+                                The Company
+                            </h3>
+                        </div>
+                        <div class="w-body-a">
+                            <div class="w-body-a">
+                                <ul class="list-unstyled">
+                                    <li class="item-list-a">
+                                        <i class="bi bi-chevron-right"></i>
+                                        <a href="contact.html">Site Map</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 section-md-t3">
+                    <div class="widget-a">
+                        <div class="w-header-a">
+                            <h3 class="w-title-a text-brand">
+                                Our Services
+                            </h3>
+                        </div>
+                        <div class="w-body-a">
+                            <ul class="list-unstyled">
+                                <li class="item-list-a">
+                                    <i class="bi bi-chevron-right"></i>
+                                    <a href="property-grid.html">Apartment Rent</a>
+                                </li>
+                                <li class="item-list-a">
+                                    <i class="bi bi-chevron-right"></i>
+                                    <a href="property-grid.html">House Rent</a>
+                                </li>
+                                <li class="item-list-a">
+                                    <i class="bi bi-chevron-right"></i>
+                                    <a href="property-grid.html">Land Lease</a>
+                                </li>
+                                <li class="item-list-a">
+                                    <i class="bi bi-chevron-right"></i>
+                                    <a href="property-grid.html">Villa Rent</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </footer>
-        <!-- End  Footer -->
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="nav-footer">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="{{ url_for('index') }}">Home</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="about.html">About</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="property-grid.html">Property</a>
+                            </li>
 
-        <div id="preloader"></div>
-        <a
-            href="#"
-            class="back-to-top d-flex align-items-center justify-content-center"
-            ><i class="bi bi-arrow-up-short"></i
-        ></a>
+                            <li class="list-inline-item">
+                                <a href="contact.html">Contact</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="socials-a">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="https://www.facebook.com/snsinstitutions/photos/?_rdr" class="link-one">
+                                    <i class="bi bi-facebook" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://x.com/snsinstitutions" class="link-one">
+                                    <i class="bi bi-twitter" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://www.instagram.com/snsinstitutions/?hl=en" class="link-one">
+                                    <i class="bi bi-instagram" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://www.linkedin.com/school/snsinstitutions/posts/?feedView=all"
+                                    class="link-one">
+                                    <i class="bi bi-linkedin" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="copyright-footer">
+                        <p class="copyright color-text-a">
+                            &copy; Copyright
+                            <span class="color-a">RentFindr</span> All Rights
+                            Reserved.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End  Footer -->
 
-        <!-- JS Files -->
-        <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
-        <script src="/server/server.js"></script>
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
-        <!--Main JS File -->
-        <script src="/static/assets/js/main.js"></script>
+    <!-- JS Files -->
+    <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="/server/server.js"></script>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const form = document.querySelector('.php-email-form');
-                
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // Get the form elements
-                    const loadingElement = form.querySelector('.loading');
-                    const errorElement = form.querySelector('.error-message');
-                    const sentElement = form.querySelector('.sent-message');
-                    const baseUrl = window.location.origin;
-                    // Show loading
-                    loadingElement.classList.add('d-block');
-                    errorElement.classList.remove('d-block');
-                    sentElement.classList.remove('d-block');
-                    
-                    // Get form data
-                    const formData = new FormData(form);
-                    const formObject = {};
-                    formData.forEach((value, key) => {
-                        formObject[key] = value;
-                    });
-                    
-                    // Make fetch API call to the Flask server
-                    fetch(`${baseUrl}/send`, {  // Update URL to match Flask server address
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formObject)
-                    })
+    <!--Main JS File -->
+    <script src="/static/assets/js/main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('.php-email-form');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Get the form elements
+                const loadingElement = form.querySelector('.loading');
+                const errorElement = form.querySelector('.error-message');
+                const sentElement = form.querySelector('.sent-message');
+                const baseUrl = window.location.origin;
+                // Show loading
+                loadingElement.classList.add('d-block');
+                errorElement.classList.remove('d-block');
+                sentElement.classList.remove('d-block');
+
+                // Get form data
+                const formData = new FormData(form);
+                const formObject = {};
+                formData.forEach((value, key) => {
+                    formObject[key] = value;
+                });
+
+                // Make fetch API call to the Flask server
+                fetch(`${baseUrl}/send`, {  // Update URL to match Flask server address
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formObject)
+                })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`HTTP error! status: ${response.status}`);
@@ -963,23 +794,24 @@
                     .then(data => {
                         // Hide loading
                         loadingElement.classList.remove('d-block');
-                        
+
                         // Show success message
                         sentElement.classList.add('d-block');
-                        
+
                         // Reset form
                         form.reset();
                     })
                     .catch(error => {
                         // Hide loading
                         loadingElement.classList.remove('d-block');
-                        
+
                         // Show error message
                         errorElement.textContent = error.message || 'Something went wrong! Please try again.';
                         errorElement.classList.add('d-block');
                     });
-                });
             });
-        </script>
-    </body>
+        });
+    </script>
+</body>
+
 </html>

@@ -5,19 +5,26 @@ body {
     font-family: "Poppins", sans-serif;
     color: #555555;
 }
+
 a {
-    color: black !important; /* Set the link color to black */
+    color: black !important;
+    /* Set the link color to black */
 }
 
 a:hover {
-    color: black !important; /* Set hover color to black as well */
+    color: black !important;
+    /* Set hover color to black as well */
 }
 
 body {
-    padding-top: 40px; /* Adjust based on your navbar height */
+    padding-top: 40px;
+    /* Adjust based on your navbar height */
 }
-body::-webkit-scrollbar{
-    display: none;}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
 h1,
 h2,
 h3,
@@ -214,7 +221,7 @@ a:hover {
 }
 
 .list-a li:before {
-    content: "";
+
     width: 10px;
     height: 2px;
     position: absolute;
@@ -277,7 +284,8 @@ a:hover {
 
 
 .dropdown-menu {
-    min-width: 200px; /* Adjust as needed */
+    min-width: 200px;
+    /* Adjust as needed */
 }
 
 .dropdown-item {
@@ -286,7 +294,8 @@ a:hover {
 }
 
 .dropdown-item:hover {
-    background-color: #f8f9fa; /* Light background on hover */
+    background-color: #f8f9fa;
+    /* Light background on hover */
 }
 
 
@@ -423,12 +432,10 @@ a:hover {
 /*------/ Overlay /------*/
 .overlay-a {
     text-decoration: none;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.2) 27%,
-        rgba(0, 0, 0, 0.65) 90%
-    );
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.2) 27%,
+            rgba(0, 0, 0, 0.65) 90%);
 }
 
 .overlay {
@@ -588,17 +595,21 @@ a:hover {
 .btn {
     transition: 0.5s ease;
 }
+
 .btn {
-    border: none; /* Remove border */
-    padding: 0; /* Remove padding for a short button */
+    border: none;
+    /* Remove border */
+    padding: 0;
+    /* Remove padding for a short button */
 }
 
 .btn img {
-    width: 150px; /* Further increase size of the icon */
+    width: 150px;
+    /* Further increase size of the icon */
     height: auto;
-    
-  
-     /* Maintain aspect ratio */
+
+
+    /* Maintain aspect ratio */
 }
 
 .btn.btn-a,
@@ -693,6 +704,7 @@ a:hover {
 }
 
 @media (min-width: 768px) {
+
     .navbar-default.navbar-trans .nav-item,
     .navbar-default.navbar-reduce .nav-item {
         margin-left: 15px;
@@ -737,12 +749,12 @@ a:hover {
     transform-origin: left;
 }
 
-.navbar-default.navbar-trans .show > .nav-link:before,
-.navbar-default.navbar-trans .active > .nav-link:before,
+.navbar-default.navbar-trans .show>.nav-link:before,
+.navbar-default.navbar-trans .active>.nav-link:before,
 .navbar-default.navbar-trans .nav-link.show:before,
 .navbar-default.navbar-trans .nav-link.active:before,
-.navbar-default.navbar-reduce .show > .nav-link:before,
-.navbar-default.navbar-reduce .active > .nav-link:before,
+.navbar-default.navbar-reduce .show>.nav-link:before,
+.navbar-default.navbar-reduce .active>.nav-link:before,
 .navbar-default.navbar-reduce .nav-link.show:before,
 .navbar-default.navbar-reduce .nav-link.active:before {
     transform: scaleX(1);
@@ -756,8 +768,8 @@ a:hover {
     color: #000000;
 }
 
-.navbar-default.navbar-trans .show > .nav-link,
-.navbar-default.navbar-trans .active > .nav-link,
+.navbar-default.navbar-trans .show>.nav-link,
+.navbar-default.navbar-trans .active>.nav-link,
 .navbar-default.navbar-trans .nav-link.show,
 .navbar-default.navbar-trans .nav-link.active {
     color: #000000;
@@ -781,8 +793,8 @@ a:hover {
     color: #000000;
 }
 
-.navbar-default.navbar-reduce .show > .nav-link,
-.navbar-default.navbar-reduce .active > .nav-link,
+.navbar-default.navbar-reduce .show>.nav-link,
+.navbar-default.navbar-reduce .active>.nav-link,
 .navbar-default.navbar-reduce .nav-link.show,
 .navbar-default.navbar-reduce .nav-link.active {
     color: #000000;
@@ -1210,6 +1222,7 @@ a:hover {
 # Card General
 --------------------------------------------------------------*/
 @media (max-width: 767px) {
+
     .card-box-a,
     .card-box-b,
     .card-box-c,
@@ -1226,6 +1239,7 @@ a:hover {
 }
 
 @media (min-width: 768px) {
+
     .grid .card-box-a,
     .grid .card-box-b,
     .grid .card-box-c,
@@ -1251,6 +1265,7 @@ a:hover {
 }
 
 @media (min-width: 768px) {
+
     .card-box-a:hover .img-a,
     .card-box-a:hover .img-b,
     .card-box-b:hover .img-a,
@@ -1260,6 +1275,7 @@ a:hover {
 }
 
 @media (min-width: 768px) {
+
     .card-box-a .price-a,
     .card-box-b .price-a {
         font-size: 0.9rem;
@@ -1267,6 +1283,7 @@ a:hover {
 }
 
 @media (min-width: 992px) {
+
     .card-box-a .price-a,
     .card-box-b .price-a {
         font-size: 1rem;
@@ -1294,12 +1311,10 @@ a:hover {
     width: 100%;
     height: 100%;
     z-index: 1;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.2) 27%,
-        rgba(0, 0, 0, 0.65) 90%
-    );
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.2) 27%,
+            rgba(0, 0, 0, 0.65) 90%);
 }
 
 /*======================================
@@ -2215,3 +2230,74 @@ footer .credits {
 }
 
 
+.img-a {
+    width: 100%;
+    height: auto;
+    max-width: 600px;
+    /* Set maximum width */
+    max-height: 800px;
+    /* Set maximum height */
+    object-fit: cover;
+    /* Ensures the image fills the container without distortion */
+}
+
+.agent-photo {
+    max-width: 800px;
+    max-height: 896px;
+    object-fit: cover;
+    /* Ensures the aspect ratio is maintained and the image doesn't get stretched */
+}
+
+.amenities-list {
+    width: 100%;
+    /* Full width container */
+}
+
+
+
+
+
+
+
+
+.list-a {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    /* Remove default bullets */
+    padding: 0;
+    margin: 0;
+}
+
+.list-a li {
+    width: 30%;
+    /* Adjust this to control column count */
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    /* Ensure text size is consistent */
+    color: #333;
+    /* Adjust color as needed */
+}
+
+.list-a li::before {
+
+    margin-right: 5px;
+    color: #666;
+    /* Adjust color as needed */
+    font-weight: normal;
+    /* Ensure the dash is consistent in weight */
+}
+
+
+
+.intro-subtitle a {
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Ensures it inherits the text color */
+  }
+  
+  .intro-subtitle a:hover {
+    text-decoration: none; /* No underline on hover */
+  }
+  
