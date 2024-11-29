@@ -66,3 +66,15 @@ This is a Flask-based web application that integrates MongoDB, machine learning 
 
 ## Project Structure
 
+
+### Explanation of Project Structure:
+- **app.py**: The main file for your Flask application that contains all the routing logic and integrates the machine learning model, MongoDB, file uploads, etc.
+- **requirements.txt**: A list of Python libraries and dependencies needed for the application.
+- **.env**: A file containing sensitive information like your MongoDB URI and email credentials.
+- **templates/**: Folder containing HTML files (rendered by Flask) for your frontend.
+- **static/**: Folder for static assets such as CSS, JavaScript, and images.
+- **uploads/**: Folder where user-uploaded files are stored.
+- **logs/**: Directory to store application logs, useful for debugging and monitoring.
+- **README.md**: Project documentation, which is the file you’re reading now.
+
+This is a complete README file including the project structure! You can directly copy-paste this into your `README.md` on GitHub.
